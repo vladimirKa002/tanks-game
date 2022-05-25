@@ -1,20 +1,27 @@
 package com.vladimirKa002.Tanks;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.vladimirKa002.Tanks.game.Game;
 
 import com.vladimirKa002.Tanks.game.Tank;
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.DefaultResourceLoader;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.FileCopyUtils;
+import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.util.*;
+
+import static java.nio.charset.StandardCharsets.UTF_8;
 
 @Controller
 public class PageController {
@@ -46,32 +53,36 @@ public class PageController {
 
         HashMap<String, String> images = new HashMap<>();
 
-        addGraphic(images, "/static/graphics/" + game.getField().getType() + "-field.png", "field");
+        addGraphic(images, "static\\graphics\\" + game.getField().getType() + "-field.png", "field");
 
-        addGraphic(images, "/static/graphics/victory.png", "victory");
-        addGraphic(images, "/static/graphics/defeat.png", "defeat");
-        addGraphic(images, "/static/graphics/logo.png", "logo");
-        addGraphic(images, "/static/graphics/gun_shot.png", "hit");
-        addGraphic(images, "/static/graphics/gun_shot2.png", "gun_shot");
-        addGraphic(images, "/static/graphics/tanks/destroyed_head.png", "destroyed_head");
-        addGraphic(images, "/static/graphics/tanks/destroyed_body.png", "destroyed_body");
+        addGraphic(images, "static\\graphics\\victory.png", "victory");
+        addGraphic(images, "static\\graphics\\defeat.png", "defeat");
+        addGraphic(images, "static\\graphics\\logo.png", "logo");
+        addGraphic(images, "static\\graphics\\gun_shot.png", "hit");
+        addGraphic(images, "static\\graphics\\gun_shot2.png", "gun_shot");
+        addGraphic(images, "static\\graphics\\tanks\\destroyed_head.png", "destroyed_head");
+        addGraphic(images, "static\\graphics\\tanks\\destroyed_body.png", "destroyed_body");
 
         for (String graphic : game.getField().getGraphics()) {
-            addGraphic(images, "/static/graphics/" + graphic + ".png", graphic);
+            String gr = graphic.replaceAll("//", "\\");
+            addGraphic(images, "static\\graphics\\" + gr + ".png", graphic);
         }
 
         for (Tank tank : game.getTanks()) {
-            addGraphic(images, "/static/graphics/tanks/" + tank.getGraphic() + "/head.png",
+            addGraphic(images, "static\\graphics\\tanks\\" + tank.getGraphic() + "\\head.png",
                     tank.id + "_head");
-            addGraphic(images, "/static/graphics/tanks/" + tank.getGraphic() + "/body.png",
+            addGraphic(images, "static\\graphics\\tanks\\" + tank.getGraphic() + "\\body.png",
                     tank.id + "_body");
         }
         return ResponseEntity.ok(new ResponseGameInit(images, game.getState(), game.getField().getMap()));
     }
 
     private void addGraphic(HashMap<String, String> images, String path, String name) throws IOException {
-        byte[] fileContent = FileUtils.readFileToByteArray(new File(getClass().getResource(path).getFile()));
-        images.put(name, Base64.getEncoder().encodeToString(fileContent));
+        ResourceLoader resourceLoader = new DefaultResourceLoader();
+        Resource resource = resourceLoader.getResource("classpath:" + path);
+
+        byte[] buffer = FileCopyUtils.copyToByteArray(resource.getInputStream());
+        images.put(name, Base64.getEncoder().encodeToString(buffer));
     }
 
     /**

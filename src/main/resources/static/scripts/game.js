@@ -11,6 +11,7 @@ var updated = true;
 
 var mouseCanvasPosition = null;
 var keysPressed = {};
+var graphics_loaded = false;
 
 // Initialization
 window.onload = function (){
@@ -50,7 +51,7 @@ window.onload = function (){
 // Game loop
 function startUpdate() {
     loop = setInterval(function() {
-        if (!updated) return
+        if (!updated || !graphics_loaded) return
 
         actions_str = ''
 
@@ -416,6 +417,8 @@ function set_canvas_field(map_content, game_state){
         }
         drawImageAtAngle(obj.rotation, x, y, w, h, graphics[obj.graphics], ctxObstacles)
     }
+
+    graphics_loaded = true;
 }
 
 // Requesting graphics

@@ -86,7 +86,8 @@ public class Base extends StaticCircleObject{
      * @param tank1     check if damaged tank is on the base
      */
     public synchronized void resetPoints(Tank tank1){
-        if (!tanksContribution.containsKey(tank1)) return;
+        if (!tanksContribution.containsKey(tank1) ||
+                (team != null && !tank1.getTeam().equals(team))) return;
         for (Tank tank : tanksContribution.keySet()) {
             double p = tanksContribution.get(tank);
             if (score == 0) p = 0;
