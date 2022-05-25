@@ -49,7 +49,7 @@ The **head** of a tank will always rotate towards the mouse cursor. To
 **shot** just left-click on the mouse on the game field.
 ![game2](readme/game2.png?raw=true "Forest")
 
-### Shooting
+### Shooting & Reloading
 The closer you are to the enemy, there more damage the projectile will deal.
 There is also some random effect that can increase damage. Make sure to shot
 precisely, because **reloading time** is 3 seconds.
