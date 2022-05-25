@@ -1,5 +1,6 @@
 # Tanks
-![Logo](src/main/resources/static/graphics/logo.png?raw=true "Logo")
+![Logo]( =100x100)
+<img src="https://github.com/vladimirKa002/tanks-game/blob/main/src/main/resources/static/graphics/logo.png" width="200" title="logo">
 
 Analogue of a gameplay of a world-famous World of Tanks game implemented in 2D.
 The game was written purely by using Java Spring framework and Javascript. 
@@ -39,7 +40,7 @@ right will display teams (alive players), your team, health points,
 reloading progress and base capture progress. You can find health points of any
 tank on corresponding labels.
 
-#### Controls
+### Controls
 To **drive** the tank use keyboard:
 'w' - move forward
 's' - move backward
