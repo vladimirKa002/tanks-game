@@ -27,13 +27,13 @@ will be showing a number of connected users. Each user will have
 a unique session id parameter. After enough users will connect to game,
 you will be redirected to the game page.
 
-#### Game field
+### Game field
 During the initialization of the game, a new field is generated. It can
 be any of three types: forest, city and desert. For each field there 
 is a json file in static/maps folder which defines objects positions.
 Tanks cannot shot and move through these obstacles.
 
-#### Tanks
+### Tanks
 Your tank will have a blue label, allies - green, enemies - red. Info bar on the 
 right will display teams (alive players), your team, health points,
 reloading progress and base capture progress. You can find health points of any
@@ -49,13 +49,13 @@ The **head** of a tank will always rotate towards the mouse cursor. To
 **shot** just left-click on the mouse on the game field.
 ![game2](readme/game2.png?raw=true "Forest")
 
-#### Shooting
+### Shooting
 The closer you are to the enemy, there more damage the projectile will deal.
 There is also some random effect that can increase damage. Make sure to shot
 precisely, because reloading time is 3 seconds.
 ![game1](readme/game1.png?raw=true "Desert")
 
-#### Base capture
+### Base capture
 In order to capture the base your tank needs to stand on it. In total,
 base capturing will take 10 seconds to take it. If there are several (>1) tanks from
 the same team are capturing the base, it will be captured faster.
@@ -64,7 +64,7 @@ some time punishment. The enemy tank can pause base capturing if it will
 stand on the base with your team.
 ![game3](readme/game3.png?raw=true "City")
 
-#### Winner
+### Winner
 In order to win you need to either destroy all enemy tanks or capture the base.
 
 ## Author notes
