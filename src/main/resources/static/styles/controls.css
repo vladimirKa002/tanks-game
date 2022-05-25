@@ -1,0 +1,152 @@
+body{
+    width: 100%;
+    background-color: DimGrey;
+}
+.title_text{
+    font-family: Open Sans,sans-serif;
+    font-size: 25px;
+    color: white;
+    margin-bottom: 5px;
+}
+.title_text_small{
+    font-family: Open Sans,sans-serif;
+    font-size: 18px;
+    color: white;
+}
+.text{
+    font-family: Open Sans,sans-serif;
+    font-size: 16px;
+    color: white;
+}
+.input_elem{
+    font-family: Open Sans,sans-serif;
+    font-size: 16px;
+    text-align: center;
+
+    background: transparent;
+    padding: 0;
+    width: 80%;
+    vertical-align: bottom;
+    text-align: center;
+    margin-bottom: 10px;
+    padding: 5px 11px 5px 11px;
+    border-width: 1px;
+}
+.input_elem.width{
+    margin-top: 5px;
+    width: 150px;
+}
+.input_elem.width.left{
+    margin-left: 10px;
+}
+
+.input_button{
+    cursor: pointer;
+    font-family: Open Sans,sans-serif;
+    font-size: 14px;
+
+    background-color: #111f13;
+    font-weight: 300;
+    color: white;
+    border: 2px solid #288621;
+    padding: 5px 11px 5px 11px;
+
+    width: 60px;
+    height: 30px;
+}
+.input_button:hover {
+    background: white;
+    color: #111f13;
+}
+.input_button.right{
+    margin-left: 10px;
+}
+.blocker{
+	background: rgba(102, 102, 102, 0.5);
+	position: fixed;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	display: none;
+}
+#canvas_game{
+    border:black 1px solid;
+    width: 500px;
+    height: 500px;
+ }
+.block{
+    position: absolute;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+.block.center{
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    margin: auto;
+}
+.tools{
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+
+    display: flex;
+    width:200px;
+    height: 500px;
+    padding: 15px;
+    flex-flow: column wrap;
+    background-color: black;
+}
+.tools.left{
+    display: flex;
+    width:200px;
+    height: 500px;
+    padding: 5px;
+    flex-flow: column wrap;
+    background-color: black;
+    align-items: center;
+    justify-content: top;
+}
+.center_panel{
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    margin: auto;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    background-color: black;
+
+    width:350px;
+    height: 250px;
+    border-radius: 10px;
+}
+.circle {
+    height: 15px;
+    width: 15px;
+    background-color: #bbb;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 3px;
+}
+.circle.right {
+    margin-left: 10px;
+}
+.circle.red {
+    background-color: red;
+}
+.circle.green {
+    background-color: green;
+}
+.circle.blue {
+    background-color: DodgerBlue;
+}
