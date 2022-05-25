@@ -1,5 +1,4 @@
 # Tanks
-![Logo]( =100x100)
 <img src="https://github.com/vladimirKa002/tanks-game/blob/main/src/main/resources/static/graphics/logo.png" width="200" title="logo">
 
 Analogue of a gameplay of a world-famous World of Tanks game implemented in 2D.
