@@ -10,8 +10,8 @@ issues on Firefox v100.0.2, on other browsers it should work fine).
 Multiplayer connection is performed by using WebSockets. On both client side (browser)
 and server side game loops (60 FPS) are working. On client side it sends requests via a socket
 and attaches user actions and checks presence of any changes on the server.
-While handling these requests, server converts the game object to json format (state)
-after applying all actions and then checks it with previous state. If they 
+While handling these requests, after applying all actions server converts 
+the game object to json format (state) and then compares it with previous state. If they 
 are not equal, it sends updated game state to all clients. The server game loop updates some game
 features (base timer, projectiles, etc).
 
@@ -24,8 +24,8 @@ Some parts of classes are intentionally omitted or simplified.
 First of all, go to menu page and select game mode. It can be duel (1 vs 1)
 and 2x2 (team fight). After this you will be redirected to waiting page. It 
 will be showing a number of connected users. Each user will have 
-a unique session id parameter. After enough users will connect to game,
-you will be redirected to the game page.
+a unique session id parameter. After a sufficient number of users connect 
+to the game, you will be redirected to the game page.
 
 ### Game field
 During the initialization of the game, a new field is generated. It can
