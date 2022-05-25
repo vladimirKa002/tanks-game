@@ -52,7 +52,7 @@ The **head** of a tank will always rotate towards the mouse cursor. To
 ### Shooting
 The closer you are to the enemy, there more damage the projectile will deal.
 There is also some random effect that can increase damage. Make sure to shot
-precisely, because reloading time is 3 seconds.
+precisely, because **reloading time** is 3 seconds.
 ![game1](readme/game1.png?raw=true "Desert")
 
 ### Base capture
