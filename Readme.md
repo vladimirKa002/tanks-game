@@ -6,7 +6,9 @@ The game was written purely by using Java Spring framework and Javascript.
 It is available on desktop-computer browsers (there were some performance 
 issues on Firefox v100.0.2, on other browsers it should work fine).
 
-To use the app launch docker container. Do this by using the following commands.  
+## Installation
+To use the app launch docker container. Do this by using the following commands.
+
 Build image:&nbsp;&nbsp; docker build -t tanks-game .  
 Launch:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 &nbsp;&nbsp;&nbsp; docker run -p 8080:8080 tanks-game
