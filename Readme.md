@@ -47,11 +47,11 @@ reloading progress and base capture progress. You can find health points of any
 tank on corresponding labels.
 
 ### Controls
-To **drive** the tank use keyboard:
-arrow up - move forward
-arrow down - move backward
-arrow left - rotate left
-arrow right - rotate right
+To **drive** the tank use keyboard:  
+arrow up - move forward  
+arrow down - move backward  
+arrow left - rotate left  
+arrow right - rotate right  
 The **head** of a tank will always rotate towards the mouse cursor. To 
 **shot** just left-click on the mouse on the game field.
 ![game2](readme/game2.png?raw=true "Forest")
