@@ -7,7 +7,7 @@ It is available on desktop-computer browsers (there were some performance
 issues on Firefox v100.0.2, on other browsers it should work fine).
 
 ## Installation
-To use the app launch docker container. Do this by using the following commands.
+To use the app launch docker container. Do this by using the following commands:
 
 Build image:&nbsp;&nbsp; docker build -t tanks-game .  
 Launch:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
