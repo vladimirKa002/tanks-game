@@ -26,10 +26,10 @@ window.onload = function (){
        event.preventDefault();
     });
     document.addEventListener('keydown', (event) => {
-       keysPressed[event.key] = true;
+       keysPressed[event.keyCode] = true;
     });
     document.addEventListener('keyup', (event) => {
-       delete this.keysPressed[event.key];
+       delete this.keysPressed[event.keyCode];
     });
 
     canvas.width = 500;
@@ -492,10 +492,10 @@ function setMovement(){
 
     if (!updated) return;
 
-    if(keysPressed['w'] || keysPressed['W']) actions_m.push('forward');
-    if(keysPressed['s'] || keysPressed['S']) actions_m.push('backward');
-    if(keysPressed['a'] || keysPressed['A']) actions_m.push('left');
-    if(keysPressed['d'] || keysPressed['D']) actions_m.push('right');
+    if(keysPressed['38']) actions_m.push('forward');
+    if(keysPressed['40']) actions_m.push('backward');
+    if(keysPressed['37']) actions_m.push('left');
+    if(keysPressed['39']) actions_m.push('right');
     if(keysPressed["mouse"]) {
         keysPressed["mouse"] = false;
         actions_m.push('shot');
