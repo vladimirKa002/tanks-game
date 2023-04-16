@@ -1,10 +1,8 @@
 package com.vladimirKa002.Tanks;
 
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.vladimirKa002.Tanks.game.Game;
 
 import com.vladimirKa002.Tanks.game.Tank;
-import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.DefaultResourceLoader;
 import org.springframework.core.io.Resource;
@@ -15,13 +13,10 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
-import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.*;
 import java.util.*;
-
-import static java.nio.charset.StandardCharsets.UTF_8;
 
 @Controller
 public class PageController {
@@ -50,34 +45,42 @@ public class PageController {
             throws Exception {
         Game game = Game.games.get(room_id.get());
         if (game == null) return ResponseEntity.ok(new ResponseMessage("GameNotFound", "The game was not found!"));
+        return ResponseEntity.ok(new ResponseGameInit(getImages(game), getAudios(), game.getState(), game.getField().getMap()));
+    }
 
+    private HashMap<String, String> getImages(Game game) throws IOException {
         HashMap<String, String> images = new HashMap<>();
 
-        addGraphic(images, "static\\graphics\\" + game.getField().getType() + "-field.png", "field");
+        addResource(images, "game\\graphics\\" + game.getField().getType() + "-field.png", "field");
 
-        addGraphic(images, "static\\graphics\\victory.png", "victory");
-        addGraphic(images, "static\\graphics\\defeat.png", "defeat");
-        addGraphic(images, "static\\graphics\\logo.png", "logo");
-        addGraphic(images, "static\\graphics\\gun_shot.png", "hit");
-        addGraphic(images, "static\\graphics\\gun_shot2.png", "gun_shot");
-        addGraphic(images, "static\\graphics\\tanks\\destroyed_head.png", "destroyed_head");
-        addGraphic(images, "static\\graphics\\tanks\\destroyed_body.png", "destroyed_body");
+        addResource(images, "game\\graphics\\victory.png", "victory");
+        addResource(images, "game\\graphics\\defeat.png", "defeat");
+        addResource(images, "game\\graphics\\gun_shot.png", "hit");
+        addResource(images, "game\\graphics\\gun_shot2.png", "gun_shot");
+        addResource(images, "game\\graphics\\tanks\\destroyed_head.png", "destroyed_head");
+        addResource(images, "game\\graphics\\tanks\\destroyed_body.png", "destroyed_body");
 
         for (String graphic : game.getField().getGraphics()) {
             String gr = graphic.replaceAll("//", "\\");
-            addGraphic(images, "static\\graphics\\" + gr + ".png", graphic);
+            addResource(images, "game\\graphics\\" + gr + ".png", graphic);
         }
 
         for (Tank tank : game.getTanks()) {
-            addGraphic(images, "static\\graphics\\tanks\\" + tank.getGraphic() + "\\head.png",
+            addResource(images, "game\\graphics\\tanks\\" + tank.getGraphic() + "\\head.png",
                     tank.id + "_head");
-            addGraphic(images, "static\\graphics\\tanks\\" + tank.getGraphic() + "\\body.png",
+            addResource(images, "game\\graphics\\tanks\\" + tank.getGraphic() + "\\body.png",
                     tank.id + "_body");
         }
-        return ResponseEntity.ok(new ResponseGameInit(images, game.getState(), game.getField().getMap()));
+        return images;
     }
 
-    private void addGraphic(HashMap<String, String> images, String path, String name) throws IOException {
+    private HashMap<String, String> getAudios() throws IOException {
+        HashMap<String, String> audios = new HashMap<>();
+        addResource(audios, "game\\audio\\shot.mp3", "shot");
+        return audios;
+    }
+
+    private void addResource(HashMap<String, String> images, String path, String name) throws IOException {
         ResourceLoader resourceLoader = new DefaultResourceLoader();
         Resource resource = resourceLoader.getResource("classpath:" + path);
 
@@ -210,11 +213,13 @@ public class PageController {
 
     static class ResponseGameInit{
         public HashMap<String, String> images;
+        public HashMap<String, String> audios;
         public String gameState;
         public String gameMap;
 
-        public ResponseGameInit(HashMap<String, String> images, String gameState, String gameMap){
+        public ResponseGameInit(HashMap<String, String> images, HashMap<String, String> audios, String gameState, String gameMap){
             this.images = images;
+            this.audios = audios;
             this.gameState = gameState;
             this.gameMap = gameMap;
         }

@@ -111,6 +111,7 @@ public class Game implements Runnable{
 
     private final ArrayList<Projectile> projectiles = new ArrayList<>(5);
     private final ArrayList<VisualEffect> visualEffects = new ArrayList<>(10);
+    private final ArrayList<AudioEffect> audioEffects = new ArrayList<>(10);
 
     public synchronized void updateProjectiles(){
         for (int i = 0; i < projectiles.size(); i++) {
@@ -129,6 +130,7 @@ public class Game implements Runnable{
     }
 
     public synchronized void updateEffects(){
+        audioEffects.clear();
         for (int i = 0; i < visualEffects.size(); i++) {
             VisualEffect visualEffect = visualEffects.get(i);
             visualEffect.update();
@@ -139,8 +141,12 @@ public class Game implements Runnable{
         }
     }
 
-    public synchronized void addEffect(VisualEffect visualEffect){
+    public synchronized void addVisualEffect(VisualEffect visualEffect){
         visualEffects.add(visualEffect);
+    }
+
+    public synchronized void addAudio(AudioEffect audioEffect){
+        this.audioEffects.add(audioEffect);
     }
 
     /**
@@ -155,7 +161,9 @@ public class Game implements Runnable{
                 "\"field\": " + field.toString() + ", " +
                 "\"base\": " + base.toString() + ", " +
                 "\"projectiles\": [" + projectiles.stream().map(Object::toString)
-                    .collect(Collectors.joining(", ")) + "] " + ", " +
+                .collect(Collectors.joining(", ")) + "] " + ", " +
+                "\"audioEffects\": [" + audioEffects.stream().map(Object::toString)
+                .collect(Collectors.joining(", ")) + "] " + ", " +
                 "\"visualEffects\": [" + visualEffects.stream().map(Object::toString)
                     .collect(Collectors.joining(", ")) + "] " +
                 "}";

@@ -196,7 +196,7 @@ function update_game(game_state){
     // Obstacles
     ctx.drawImage(canvasObstacles, 0, 0, game_state.field.units, game_state.field.units);
 
-    // Effects
+    // Visual effects
     for (var i = 0; i < game_state.visualEffects.length; i++){
         const effect = game_state.visualEffects[i];
 
@@ -207,6 +207,12 @@ function update_game(game_state){
         height = canvas.height * (effect.shape[1] / game_state.field.units)
 
         drawImageAtAngle(effect.rotation, x, y, width, height, graphics[effect.graphics], ctx);
+    }
+    // Audio effects
+    for (var i = 0; i < game_state.audioEffects.length; i++){
+        const effect = game_state.audioEffects[i];
+        if (audios[effect.name] !== undefined)
+            audios[effect.name].play();
     }
 
     enemies_total = 0
@@ -382,6 +388,7 @@ function drawImageAtAngle(angle, x, y, width, height, image, ctx){
 }
 
 var graphics = {};
+var audios = {};
 var obstacles;
 
 // Initializing canvas
@@ -430,8 +437,16 @@ function start(){
         cache: false,
         timeout: 180000,
         success: function (content) {
-            num = Object.entries(content.images).length
-            for (const [key, value] of Object.entries(content.images)) {
+            images = Object.entries(content.images)
+            audios = Object.entries(content.audios)
+
+            for (const [key, value] of audios) {
+                audios[key] = new Audio("data:audio/mp3;base64," + value);
+            }
+
+            num = images.length
+
+            for (const [key, value] of images) {
                 const image = new Image();
                 image.onload = function () {
                     graphics[key] = image

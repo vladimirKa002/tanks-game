@@ -47,7 +47,7 @@ public class Field {
         tanksPositions_teams.add(l2);
 
         ResourceLoader resourceLoader = new DefaultResourceLoader();
-        Resource resource = resourceLoader.getResource("classpath:static/maps/" + type + ".json");
+        Resource resource = resourceLoader.getResource("classpath:game/maps/" + type + ".json");
         try {
             JSONObject data = new JSONObject(resourceAsString(resource));
             JSONArray obstaclesData = data.getJSONArray("obstacles");
@@ -93,7 +93,7 @@ public class Field {
                 }
                 else if (objects.getString("name").equals("building")) {
                     Building building = new Building(position, rotation, shapeItem, shape,
-                            "buildings/" + objects.getString("graphics"));
+                            "buildings/" + objects.getString("game"));
                     obstacles.add(building);
                     graphic = building.getGraphics();
                 }
@@ -144,7 +144,7 @@ public class Field {
     }
 
     public String getMap(){
-        return "{ \"obstacles\": " + obstacles.toString() + "}";
+        return "{ \"obstacles\": " + obstacles + "}";
     }
 
     public static String resourceAsString(Resource resource) {

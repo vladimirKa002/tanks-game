@@ -177,7 +177,8 @@ public class Tank extends RectangleObject{
         shotPosition[1] += y_dir * pos;
 
         game.addProjectile(new Projectile(position.clone(), angle, this, game));
-        game.addEffect(new VisualEffect(shotPosition.clone(), angle, "gun_shot"));
+        game.addVisualEffect(new VisualEffect(shotPosition.clone(), angle, "gun_shot"));
+        game.addAudio(new AudioEffect("shot"));
 
         reloadingProgress = 0;
         reloadingTime = 0;
