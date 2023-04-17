@@ -15,6 +15,7 @@ var graphics_loaded = false;
 
 var tankUser = null;
 var teamOpponent;
+var isAirAlert = false;
 var fieldImage;
 var canvasField;
 var canvasObstacles;
@@ -258,6 +259,7 @@ function updateGame(game_state){
 
     if (game_state.state === 'finished') {
         stopAudio('back-sound')
+        stopAudio('air-alert')
         if (tankUser.team == game_state.winner) {
             img = graphics["victory"]
         }
@@ -418,6 +420,14 @@ function setBase(base){
         ctx.arc(x, y, r, - Math.PI / 2, 2 * Math.PI * base.progress / 100 - Math.PI / 2);
         ctx.stroke();
     }
+
+    // Setting air-alert sound if base capturing
+    if (base.team != 'null') {
+        if (!isAirAlert)
+            playAudio('air-alert', true)
+    }
+    else stopAudio('air-alert')
+    isAirAlert = base.team != 'null'
 
     td_green = '<td style=\"vertical-align: bottom;color: green;\">'
     td_red = '<td style=\"vertical-align: bottom;color: red;\">'

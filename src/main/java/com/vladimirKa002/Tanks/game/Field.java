@@ -18,7 +18,7 @@ import java.util.*;
 import static java.nio.charset.StandardCharsets.UTF_8;
 
 public class Field {
-    private static final String[] FIELDS = {"desert"}; // {"forest", "city", "desert"};
+    private static final String[] FIELDS = {"forest", "city", "desert"};
     private final int units = 500;
 
     private final String type;

@@ -77,6 +77,7 @@ public class PageController {
     private HashMap<String, String> getAudios(Game game) throws IOException {
         HashMap<String, String> audios = new HashMap<>();
         addResource(audios, "game\\audio\\shot.mp3", "shot");
+        addResource(audios, "game\\audio\\air-alert.mp3", "air-alert");
         addResource(audios, "game\\audio\\background\\" + game.getField().getBackSound() + ".mp3", "back-sound");
         return audios;
     }
