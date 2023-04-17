@@ -475,10 +475,10 @@ function setMovement(){
 
     if (!updated) return;
 
-    if(keysPressed['38'] || keysPressed['w']) actions_m.push('forward');
-    if(keysPressed['40'] || keysPressed['s']) actions_m.push('backward');
-    if(keysPressed['37'] || keysPressed['a']) actions_m.push('left');
-    if(keysPressed['39'] || keysPressed['d']) actions_m.push('right');
+    if(keysPressed['38'] || keysPressed['87'] || keysPressed['119']) actions_m.push('forward');
+    if(keysPressed['40'] || keysPressed['83'] || keysPressed['115']) actions_m.push('backward');
+    if(keysPressed['37'] || keysPressed['65'] || keysPressed['97']) actions_m.push('left');
+    if(keysPressed['39'] || keysPressed['68'] || keysPressed['100']) actions_m.push('right');
     if(keysPressed["mouse"]) {
         keysPressed["mouse"] = false;
         actions_m.push('shot');

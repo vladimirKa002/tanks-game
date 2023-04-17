@@ -95,7 +95,7 @@ public class Field {
                 }
                 else if (objects.getString("name").equals("building")) {
                     Building building = new Building(position, rotation, shapeItem, shape,
-                            "buildings/" + objects.getString("game"));
+                            "buildings/" + objects.getString("graphics"));
                     obstacles.add(building);
                     graphic = building.getGraphics();
                 }
