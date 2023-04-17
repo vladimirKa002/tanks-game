@@ -13,6 +13,17 @@ var mouseCanvasPosition = null;
 var keysPressed = {};
 var graphics_loaded = false;
 
+var tankUser = null;
+var teamOpponent;
+var fieldImage;
+var canvasField;
+var canvasObstacles;
+
+
+///////////////////////////////////////////////////////////////////////////////////
+// Functions for socket connection
+///////////////////////////////////////////////////////////////////////////////////
+
 // Initialization
 window.onload = function (){
     // Getting canvas
@@ -48,35 +59,6 @@ window.onload = function (){
     });
 }
 
-// Game loop
-function startUpdate() {
-    loop = setInterval(function() {
-        if (!updated || !graphics_loaded) return
-
-        actions_str = ''
-
-        if (!disable_actions) {
-            actions = []
-            a = setTankHead();
-            if (a != '') actions.push(a)
-            as = setMovement();
-            if (as.length != 0)
-                for (const element of as){
-                    actions.push(element)
-                }
-
-            actions_str = ""
-            for (const element of actions){
-                actions_str = actions_str + ";" + element
-            }
-
-            if (actions_str.length > 0) actions_str = actions_str.substring(1)
-        }
-
-        update_game_request(actions_str)
-    }, 1000/60);
-}
-
 // Socket connection
 function connect(game_id) {
     var socket = new SockJS('/tanks');
@@ -84,19 +66,13 @@ function connect(game_id) {
     stompClient.debug = null
     stompClient.connect({}, function(frame) {
         stompClient.subscribe('/game.' + game_id, function(content) {
-            update_game(content.body);
+            updateGame(content.body);
         });
     });
 }
 
-var tankUser = null;
-var teamOpponent;
-var fieldImage;
-var canvasField;
-var canvasObstacles;
-
 // Game updating. Updates game everytime client receives data package from the server
-function update_game(game_state){
+function updateGame(game_state){
     updated = false;
 
     game_state = JSON.parse(game_state)
@@ -208,11 +184,11 @@ function update_game(game_state){
 
         drawImageAtAngle(effect.rotation, x, y, width, height, graphics[effect.graphics], ctx);
     }
+
     // Audio effects
     for (var i = 0; i < game_state.audioEffects.length; i++){
         const effect = game_state.audioEffects[i];
-        if (audios[effect.name] !== undefined)
-            audios[effect.name].play();
+        playAudio(effect.name)
     }
 
     enemies_total = 0
@@ -281,6 +257,7 @@ function update_game(game_state){
 
 
     if (game_state.state === 'finished') {
+        stopAudio('back-sound')
         if (tankUser.team == game_state.winner) {
             img = graphics["victory"]
         }
@@ -296,6 +273,130 @@ function update_game(game_state){
 
     updated = true;
 }
+
+
+///////////////////////////////////////////////////////////////////////////////////
+// Functions for game loop
+///////////////////////////////////////////////////////////////////////////////////
+
+var graphics = {};
+var audios = {};
+var obstacles;
+
+// Requesting graphics
+function start(){
+    $.ajax({
+        type: "GET",
+        contentType: "application/json",
+        url: "/game/init?room_id=" + room_id,
+        cache: false,
+        timeout: 180000,
+        success: function (content) {
+            images = Object.entries(content.images)
+            audios = Object.entries(content.audios)
+
+            for (const [key, value] of audios) {
+                audios[key] = new Audio("data:audio/mp3;base64," + value);
+            }
+
+            num = images.length
+
+            for (const [key, value] of images) {
+                const image = new Image();
+                image.onload = function () {
+                    graphics[key] = image
+                    num -= 1;
+                    if (num === 0) {
+                        setCanvasField(content.gameMap, content.gameState)
+                        updateGame(content.gameState)
+                        startUpdate();
+                    }
+                }
+                image.src = "data:image/png;base64," + value;
+            }
+        }
+    });
+}
+
+// Initializing canvas
+function setCanvasField(map_content, game_state){
+    game_state = JSON.parse(game_state)
+    map_content = JSON.parse(map_content).obstacles
+    obstacles = map_content
+
+    canvasField = document.createElement('canvas');
+    ctxField = canvasField.getContext('2d');
+    canvasField.width = 500;
+    canvasField.height = 500;
+
+    ctxField.drawImage(graphics["field"], 0, 0, game_state.field.units, game_state.field.units);
+
+    canvasObstacles = document.createElement('canvas');
+    ctxObstacles = canvasObstacles.getContext('2d');
+    canvasObstacles.width = 500;
+    canvasObstacles.height = 500;
+
+    for (var i = 0; i < map_content.length; i++){
+        var obj = map_content[i];
+
+        x = obj.position[0]
+        y = obj.position[1]
+        if (obj.type === 'circle') {
+            w = obj.radius * 2
+            h = obj.radius * 2
+        }
+        else {
+            w = obj.shape[0]
+            h = obj.shape[1]
+        }
+        drawImageAtAngle(obj.rotation, x, y, w, h, graphics[obj.graphics], ctxObstacles)
+    }
+
+    playAudio('back-sound', true)
+
+    graphics_loaded = true;
+}
+
+// Game loop
+function startUpdate() {
+    loop = setInterval(function() {
+        if (!updated || !graphics_loaded) return
+
+        actions_str = ''
+
+        if (!disable_actions) {
+            actions = []
+            a = setTankHead();
+            if (a != '') actions.push(a)
+            as = setMovement();
+            if (as.length != 0)
+                for (const element of as){
+                    actions.push(element)
+                }
+
+            actions_str = ""
+            for (const element of actions){
+                actions_str = actions_str + ";" + element
+            }
+
+            if (actions_str.length > 0) actions_str = actions_str.substring(1)
+        }
+
+        updateGameRequest(actions_str)
+    }, 1000/60);
+}
+
+// If some actions were performed, update game
+var disable_actions = false;
+function updateGameRequest(actions){
+     stompClient.send("/app/game/update", {},
+        JSON.stringify({'room_id':room_id, 'session_id':session_id, 'actions': actions}));
+}
+
+
+///////////////////////////////////////////////////////////////////////////////////
+// Utility functions
+///////////////////////////////////////////////////////////////////////////////////
 
 // Drawing base
 function setBase(base){
@@ -337,6 +438,53 @@ function setBase(base){
         "<div style=\"line-height: 25px;vertical-align: middle\">Base " + base.team + "</div>";
     else document.getElementById('base_title').innerHTML =
         "<div style=\"line-height: 25px;vertical-align: middle\">Base</div>";
+}
+
+// Tank head rotation
+function setTankHead(){
+    if (mouseCanvasPosition == null) return ''
+
+    x = mouseCanvasPosition[0]
+    y = mouseCanvasPosition[1]
+
+    action = ''
+    head_angle = (tankUser.rotation + tankUser.headRotation + 720) % 360
+    mouse_angle = (angle(tankUser.position[0], tankUser.position[1], x, y) + 90 + 360) % 360
+
+    min_angle = Math.min(mouse_angle, head_angle)
+    max_angle = Math.max(mouse_angle, head_angle)
+    difference_angle = max_angle - min_angle
+
+    if (head_angle < mouse_angle) {
+        if (difference_angle < 180) action = "head_right"
+        if (difference_angle > 180) action = "head_left"
+    }
+    else {
+        if (difference_angle > 180) action = "head_right"
+        if (difference_angle < 180) action = "head_left"
+    }
+
+    if (difference_angle > 180) difference_angle = 360 - difference_angle;
+    if (difference_angle < tankUser.headRotationSpeed) return '';
+
+    return  action;
+}
+
+function setMovement(){
+    actions_m = []
+
+    if (!updated) return;
+
+    if(keysPressed['38'] || keysPressed['w']) actions_m.push('forward');
+    if(keysPressed['40'] || keysPressed['s']) actions_m.push('backward');
+    if(keysPressed['37'] || keysPressed['a']) actions_m.push('left');
+    if(keysPressed['39'] || keysPressed['d']) actions_m.push('right');
+    if(keysPressed["mouse"]) {
+        keysPressed["mouse"] = false;
+        actions_m.push('shot');
+    }
+
+    return actions_m;
 }
 
 // Setting UI for alive tanks while game updating
@@ -387,112 +535,6 @@ function drawImageAtAngle(angle, x, y, width, height, image, ctx){
     ctx.translate(-x, -y);
 }
 
-var graphics = {};
-var audios = {};
-var obstacles;
-
-// Initializing canvas
-function set_canvas_field(map_content, game_state){
-    game_state = JSON.parse(game_state)
-    map_content = JSON.parse(map_content).obstacles
-    obstacles = map_content
-
-    canvasField = document.createElement('canvas');
-    ctxField = canvasField.getContext('2d');
-    canvasField.width = 500;
-    canvasField.height = 500;
-
-    ctxField.drawImage(graphics["field"], 0, 0, game_state.field.units, game_state.field.units);
-
-    canvasObstacles = document.createElement('canvas');
-    ctxObstacles = canvasObstacles.getContext('2d');
-    canvasObstacles.width = 500;
-    canvasObstacles.height = 500;
-
-    for (var i = 0; i < map_content.length; i++){
-        var obj = map_content[i];
-
-        x = obj.position[0]
-        y = obj.position[1]
-        if (obj.type === 'circle') {
-            w = obj.radius * 2
-            h = obj.radius * 2
-        }
-        else {
-            w = obj.shape[0]
-            h = obj.shape[1]
-        }
-        drawImageAtAngle(obj.rotation, x, y, w, h, graphics[obj.graphics], ctxObstacles)
-    }
-
-    graphics_loaded = true;
-}
-
-// Requesting graphics
-function start(){
-    $.ajax({
-        type: "GET",
-        contentType: "application/json",
-        url: "/game/init?room_id=" + room_id,
-        cache: false,
-        timeout: 180000,
-        success: function (content) {
-            images = Object.entries(content.images)
-            audios = Object.entries(content.audios)
-
-            for (const [key, value] of audios) {
-                audios[key] = new Audio("data:audio/mp3;base64," + value);
-            }
-
-            num = images.length
-
-            for (const [key, value] of images) {
-                const image = new Image();
-                image.onload = function () {
-                    graphics[key] = image
-                    num -= 1;
-                    if (num === 0) {
-                        set_canvas_field(content.gameMap, content.gameState)
-                        update_game(content.gameState)
-                        startUpdate();
-                    }
-                }
-                image.src = "data:image/png;base64," + value;
-            }
-        }
-    });
-}
-
-// Tank head rotation
-function setTankHead(){
-    if (mouseCanvasPosition == null) return ''
-
-    x = mouseCanvasPosition[0]
-    y = mouseCanvasPosition[1]
-
-    action = ''
-    head_angle = (tankUser.rotation + tankUser.headRotation + 720) % 360
-    mouse_angle = (angle(tankUser.position[0], tankUser.position[1], x, y) + 90 + 360) % 360
-
-    min_angle = Math.min(mouse_angle, head_angle)
-    max_angle = Math.max(mouse_angle, head_angle)
-    difference_angle = max_angle - min_angle
-
-    if (head_angle < mouse_angle) {
-        if (difference_angle < 180) action = "head_right"
-        if (difference_angle > 180) action = "head_left"
-    }
-    else {
-        if (difference_angle > 180) action = "head_right"
-        if (difference_angle < 180) action = "head_left"
-    }
-
-    if (difference_angle > 180) difference_angle = 360 - difference_angle;
-    if (difference_angle < tankUser.headRotationSpeed) return '';
-
-    return  action;
-}
-
 function angle(cx, cy, ex, ey) {
   var dy = ey - cy;
   var dx = ex - cx;
@@ -502,26 +544,18 @@ function angle(cx, cy, ex, ey) {
   return theta;
 }
 
-function setMovement(){
-    actions_m = []
-
-    if (!updated) return;
-
-    if(keysPressed['38']) actions_m.push('forward');
-    if(keysPressed['40']) actions_m.push('backward');
-    if(keysPressed['37']) actions_m.push('left');
-    if(keysPressed['39']) actions_m.push('right');
-    if(keysPressed["mouse"]) {
-        keysPressed["mouse"] = false;
-        actions_m.push('shot');
+function playAudio(name, loop=false){
+    let sound = audios[name]
+    if (sound !== undefined){
+        sound.loop = loop;
+        sound.play()
     }
-
-    return actions_m;
 }
 
-// If some actions were performed, update game
-var disable_actions = false;
-function update_game_request(actions){
-     stompClient.send("/app/game/update", {},
-        JSON.stringify({'room_id':room_id, 'session_id':session_id, 'actions': actions}));
+function stopAudio(name){
+    let sound = audios[name]
+    if (sound !== undefined) {
+        sound.pause();
+        sound.currentTime = 0;
+    }
 }

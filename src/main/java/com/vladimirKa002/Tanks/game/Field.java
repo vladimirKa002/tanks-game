@@ -32,6 +32,8 @@ public class Field {
 
     private double[] basePosition;
 
+    private String backSoundName;
+
     // Creating a field. Randomly pick one of types defined in FIELDS
     public Field(){
         Random rnd = new Random();
@@ -101,6 +103,7 @@ public class Field {
             }
             JSONArray jsonArray = data.getJSONArray("base");
             basePosition = new double[]{jsonArray.getDouble(0), jsonArray.getDouble(1)};
+            backSoundName = data.getString("back-sound");
         } catch (JSONException e) {
             e.printStackTrace();
             basePosition = new double[]{(double) units / 2, (double) units / 2};
@@ -133,6 +136,10 @@ public class Field {
 
     public Area getArea(){
         return area;
+    }
+
+    public String getBackSound(){
+        return backSoundName;
     }
 
     @Override

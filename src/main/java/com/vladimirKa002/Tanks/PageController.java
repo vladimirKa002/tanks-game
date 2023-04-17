@@ -45,7 +45,7 @@ public class PageController {
             throws Exception {
         Game game = Game.games.get(room_id.get());
         if (game == null) return ResponseEntity.ok(new ResponseMessage("GameNotFound", "The game was not found!"));
-        return ResponseEntity.ok(new ResponseGameInit(getImages(game), getAudios(), game.getState(), game.getField().getMap()));
+        return ResponseEntity.ok(new ResponseGameInit(getImages(game), getAudios(game), game.getState(), game.getField().getMap()));
     }
 
     private HashMap<String, String> getImages(Game game) throws IOException {
@@ -74,9 +74,10 @@ public class PageController {
         return images;
     }
 
-    private HashMap<String, String> getAudios() throws IOException {
+    private HashMap<String, String> getAudios(Game game) throws IOException {
         HashMap<String, String> audios = new HashMap<>();
         addResource(audios, "game\\audio\\shot.mp3", "shot");
+        addResource(audios, "game\\audio\\background\\" + game.getField().getBackSound() + ".mp3", "back-sound");
         return audios;
     }
 
