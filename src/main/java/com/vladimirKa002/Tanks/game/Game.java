@@ -4,6 +4,7 @@ import com.vladimirKa002.Tanks.GameResources;
 import com.vladimirKa002.Tanks.PageController;
 import com.vladimirKa002.Tanks.TanksApplication;
 import com.vladimirKa002.Tanks.game.Effects.AudioEffect;
+import com.vladimirKa002.Tanks.game.Effects.Effect;
 import com.vladimirKa002.Tanks.game.Effects.VisualEffect;
 
 import java.util.*;
@@ -120,7 +121,7 @@ public class Game implements Runnable{
             Projectile projectile = projectiles.get(i);
             projectile.update();
             if (!projectile.isActive()) {
-                visualEffects.add(new VisualEffect(projectile.position, projectile.rotation, "hit"));
+                visualEffects.add(new VisualEffect(projectile.position, projectile.rotation, "hit", Effect.EFFECT_TO_ALL));
                 projectiles.remove(i);
                 i--;
             }

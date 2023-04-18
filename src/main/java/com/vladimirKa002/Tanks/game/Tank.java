@@ -1,6 +1,7 @@
 package com.vladimirKa002.Tanks.game;
 
 import com.vladimirKa002.Tanks.game.Effects.AudioEffect;
+import com.vladimirKa002.Tanks.game.Effects.Effect;
 import com.vladimirKa002.Tanks.game.Effects.VisualEffect;
 
 import java.awt.geom.Area;
@@ -138,7 +139,7 @@ public class Tank extends RectangleObject{
 
     public void setDamage(int damage){
         int pos = game.getMap().getUnits() / 2;
-        game.addVisualEffect(new VisualEffect(new double[]{pos, pos}, 0, "damage"));
+        game.addVisualEffect(new VisualEffect(new double[]{pos, pos}, 0, "damage", id + ""));
         health -= damage;
         if (health < 0) health = 0;
     }
@@ -182,8 +183,8 @@ public class Tank extends RectangleObject{
         shotPosition[1] += y_dir * pos;
 
         game.addProjectile(new Projectile(position.clone(), angle, this, game));
-        game.addVisualEffect(new VisualEffect(shotPosition.clone(), angle, "gun_shot"));
-        game.addAudio(new AudioEffect("shot"));
+        game.addVisualEffect(new VisualEffect(shotPosition.clone(), angle, "gun_shot", Effect.EFFECT_TO_ALL));
+        game.addAudio(new AudioEffect("shot", Effect.EFFECT_TO_ALL));
 
         reloadingProgress = 0;
         reloadingTime = 0;

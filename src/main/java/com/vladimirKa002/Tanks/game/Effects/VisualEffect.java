@@ -9,8 +9,8 @@ public class VisualEffect extends Effect {
     private boolean isActive = true;
     private final double[] shape;
 
-    public VisualEffect(double[] position, double rotation, String name){
-        super(position, rotation, name);
+    public VisualEffect(double[] position, double rotation, String name, String toWhom){
+        super(position, rotation, name, toWhom);
 
         double[] shape = GameResources.getInstance().getVisualEffectSize(name);
         if (shape[0] == Double.MAX_VALUE){
@@ -42,6 +42,7 @@ public class VisualEffect extends Effect {
     public String toString() {
         return "{" +
                 "\"graphics\": \"" + name + "\", " +
+                "\"toWhom\": \"" + toWhom + "\", " +
                 "\"rotation\": " + rotation + ", " +
                 "\"shape\": " + Arrays.toString(shape) + ", " +
                 "\"position\": " + Arrays.toString(position) +

@@ -178,6 +178,9 @@ function updateGame(game_state){
     for (var i = 0; i < game_state.visualEffects.length; i++){
         const effect = game_state.visualEffects[i];
 
+        if (!applyEffect(effect))
+            continue
+
         x = effect.position[0]
         y = effect.position[1]
 
@@ -190,6 +193,10 @@ function updateGame(game_state){
     // Audio effects
     for (var i = 0; i < game_state.audioEffects.length; i++){
         const effect = game_state.audioEffects[i];
+
+        if (!applyEffect(effect))
+            continue
+
         playAudio(effect.name)
     }
 
@@ -353,7 +360,6 @@ function setCanvasField(map_content, game_state){
             w = obj.shape[0]
             h = obj.shape[1]
         }
-        console.log(obj.graphics)
         drawImageAtAngle(obj.rotation, x, y, w, h, graphics[obj.graphics], ctxObstacles)
     }
 
@@ -576,4 +582,9 @@ function stopAudio(name){
         sound.pause();
         sound.currentTime = 0;
     }
+}
+
+function applyEffect(effect){
+    const toWhom = effect.toWhom
+    return toWhom === String(tankUser.id) || toWhom === tankUser.team || toWhom === "all"
 }
