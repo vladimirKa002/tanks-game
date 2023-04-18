@@ -46,6 +46,7 @@
 {"name": "tree", "type": "circle", "graphic": "green-tree", "position": [436.0, 155.0], "rotation": 24.0, "radius": 19.5},
 {"name": "tree", "type": "circle", "graphic": "green-tree", "position": [20, 388], "rotation": 127.0, "radius": 19.5},
 {"name": "tree", "type": "circle", "graphic": "green-tree", "position": [23, 202], "rotation": 63.0, "radius": 19.5}],
+  "units": 500,
   "base": [252, 250],
   "back-sound": "forest"
 }

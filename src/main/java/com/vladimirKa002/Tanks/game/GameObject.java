@@ -17,6 +17,10 @@ public abstract class GameObject {
         this.id = counter.incrementAndGet();
     }
 
+    public GameObject(){
+        this.id = counter.incrementAndGet();
+    }
+
     public void update(){
 
     }

@@ -1,5 +1,8 @@
 package com.vladimirKa002.Tanks.game;
 
+import com.vladimirKa002.Tanks.game.Effects.AudioEffect;
+import com.vladimirKa002.Tanks.game.Effects.VisualEffect;
+
 import java.awt.geom.Area;
 import java.util.*;
 import java.util.List;
@@ -23,6 +26,8 @@ public class Tank extends RectangleObject{
 
     private final String graphic;
 
+    private final Game game;
+
     private double[] prevPosition;
     private double prevRotation;
 
@@ -34,20 +39,15 @@ public class Tank extends RectangleObject{
 
     private final String team;
 
-    public Tank(double[] position, String fieldType, String team, int units){
-        super(position, (position[1] < (double) units / 2 ? 180 : 0), bodyShape);
+    public Tank(double[] position, String team, Game game){
+        super(position, (position[1] < (double) game.getMap().getUnits() / 2 ? 180 : 0), bodyShape);
 
-        this.team = team;
-
-        switch (fieldType) {
+        switch (game.getMap().getType()) {
             case "forest":
                 graphic = "green";
                 break;
             case "desert":
                 graphic = "sand";
-                break;
-            case "winter":
-                graphic = "white";
                 break;
             case "city":
                 graphic = "grey";
@@ -56,6 +56,9 @@ public class Tank extends RectangleObject{
                 graphic = "green";
                 break;
         }
+
+        this.team = team;
+        this.game = game;
     }
 
     public String getUser(){
@@ -133,7 +136,9 @@ public class Tank extends RectangleObject{
         }
     }
 
-    public void setHealth(int damage){
+    public void setDamage(int damage){
+        int pos = game.getMap().getUnits() / 2;
+        game.addVisualEffect(new VisualEffect(new double[]{pos, pos}, 0, "damage"));
         health -= damage;
         if (health < 0) health = 0;
     }
@@ -163,7 +168,7 @@ public class Tank extends RectangleObject{
     private int reloadingProgress = 100; // percents
     private double reloadingTime = RELOADING_TIME;
 
-    public void shot(Game game){
+    public void shot(){
         if (reloadingProgress != 100) return;
 
         double angle = rotation + head_rotation;

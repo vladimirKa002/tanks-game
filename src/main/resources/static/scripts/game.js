@@ -16,7 +16,6 @@ var graphics_loaded = false;
 var tankUser = null;
 var teamOpponent;
 var isAirAlert = false;
-var fieldImage;
 var canvasField;
 var canvasObstacles;
 
@@ -78,7 +77,9 @@ function updateGame(game_state){
 
     game_state = JSON.parse(game_state)
 
-    ctx.drawImage(canvasField, 0, 0, game_state.field.units, game_state.field.units);
+    units = game_state.map.units
+
+    ctx.drawImage(canvasField, 0, 0, units, units);
 
     // Setting tankUser
     for (var i = 0; i < game_state.tanks.length; i++){
@@ -105,8 +106,8 @@ function updateGame(game_state){
         x = tank.position[0]
         y = tank.position[1]
 
-        width = canvas.width * (tank.bodyShape[0] / game_state.field.units)
-        height = canvas.height * (tank.bodyShape[1] / game_state.field.units)
+        width = canvas.width * (tank.bodyShape[0] / units)
+        height = canvas.height * (tank.bodyShape[1] / units)
 
         drawImageAtAngle(tank.rotation, x, y, width, height, graphics[tank_body_graphics], ctx);
     }
@@ -153,8 +154,8 @@ function updateGame(game_state){
         hr_x = tank.headRotationPos[0]
         hr_y = tank.headRotationPos[1]
 
-        h_width = canvas.width * (tank.headShape[0] / game_state.field.units)
-        h_height = canvas.height * (tank.headShape[1] / game_state.field.units)
+        h_width = canvas.width * (tank.headShape[0] / units)
+        h_height = canvas.height * (tank.headShape[1] / units)
 
 
         ctx.translate(x, y);
@@ -171,7 +172,7 @@ function updateGame(game_state){
     }
 
     // Obstacles
-    ctx.drawImage(canvasObstacles, 0, 0, game_state.field.units, game_state.field.units);
+    ctx.drawImage(canvasObstacles, 0, 0, units, units);
 
     // Visual effects
     for (var i = 0; i < game_state.visualEffects.length; i++){
@@ -180,8 +181,8 @@ function updateGame(game_state){
         x = effect.position[0]
         y = effect.position[1]
 
-        width = canvas.width * (effect.shape[0] / game_state.field.units)
-        height = canvas.height * (effect.shape[1] / game_state.field.units)
+        width = canvas.width * (effect.shape[0] / units)
+        height = canvas.height * (effect.shape[1] / units)
 
         drawImageAtAngle(effect.rotation, x, y, width, height, graphics[effect.graphics], ctx);
     }
@@ -331,7 +332,8 @@ function setCanvasField(map_content, game_state){
     canvasField.width = 500;
     canvasField.height = 500;
 
-    ctxField.drawImage(graphics["field"], 0, 0, game_state.field.units, game_state.field.units);
+    units = game_state.map.units
+    ctxField.drawImage(graphics["map"], 0, 0, units, units);
 
     canvasObstacles = document.createElement('canvas');
     ctxObstacles = canvasObstacles.getContext('2d');
@@ -351,6 +353,7 @@ function setCanvasField(map_content, game_state){
             w = obj.shape[0]
             h = obj.shape[1]
         }
+        console.log(obj.graphics)
         drawImageAtAngle(obj.rotation, x, y, w, h, graphics[obj.graphics], ctxObstacles)
     }
 
@@ -397,7 +400,7 @@ function updateGameRequest(actions){
 
 
 ///////////////////////////////////////////////////////////////////////////////////
-// Utility functions
+// Tank control functions
 ///////////////////////////////////////////////////////////////////////////////////
 
 // Drawing base
@@ -536,6 +539,11 @@ function setAliveTanksUI(allies_alive, allies_total, enemies_alive, enemies_tota
     document.getElementById('user_block').innerHTML = user_info
     document.getElementById('you_title').innerHTML = "You " + tankUser.team;
 }
+
+
+///////////////////////////////////////////////////////////////////////////////////
+// Utility functions
+///////////////////////////////////////////////////////////////////////////////////
 
 function drawImageAtAngle(angle, x, y, width, height, image, ctx){
     ctx.translate(x, y);

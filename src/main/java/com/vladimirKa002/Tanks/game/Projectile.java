@@ -125,7 +125,7 @@ public class Projectile extends RectangleObject {
         position[0] += x_dir * SPEED;
         position[1] += y_dir * SPEED;
 
-        checkIntersection(game.getField().getArea(), null);
+        checkIntersection(game.getMap().getArea(), null);
         for (Tank tank: game.getTanks()) {
             if (tank.id != owner.id) {
                 checkIntersection(tank.getShape(), tank);
@@ -146,12 +146,12 @@ public class Projectile extends RectangleObject {
                 Tank tank = (Tank) obj;
                 if (!tank.getTeam().equals(owner.getTeam())) {
                     game.getBase().resetPoints(tank);
-                    tank.setHealth(getDamage());
+                    tank.setDamage(getDamage());
                 }
             }
         }
 
-        if (checkPosition(game.getField().getUnits())) {
+        if (checkPosition(game.getMap().getUnits())) {
             isActive = false;
         }
     }

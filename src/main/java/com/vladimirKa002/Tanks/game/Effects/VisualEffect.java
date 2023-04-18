@@ -1,18 +1,22 @@
-package com.vladimirKa002.Tanks.game;
+package com.vladimirKa002.Tanks.game.Effects;
+
+import com.vladimirKa002.Tanks.GameResources;
+import com.vladimirKa002.Tanks.game.Game;
 
 import java.util.Arrays;
 
-public class VisualEffect extends GameObject {
-    private final String name;
+public class VisualEffect extends Effect {
     private boolean isActive = true;
-    private double[] shape;
+    private final double[] shape;
 
     public VisualEffect(double[] position, double rotation, String name){
-        super(position, rotation);
-        this.name = name;
+        super(position, rotation, name);
 
-        if (name.equals("hit")) shape = new double[]{0.3 * sizeMultiplier, 0.3 * sizeMultiplier};
-        else if (name.equals("gun_shot")) shape = new double[]{0.3 * sizeMultiplier, 0.566 * sizeMultiplier};
+        double[] shape = GameResources.getInstance().getVisualEffectSize(name);
+        if (shape[0] == Double.MAX_VALUE){
+            this.shape = new double[]{1000 * sizeMultiplier, 1000 * sizeMultiplier};
+        }
+        else this.shape = new double[]{shape[0] * sizeMultiplier, shape[1] * sizeMultiplier};
     }
 
     public boolean isActive() {

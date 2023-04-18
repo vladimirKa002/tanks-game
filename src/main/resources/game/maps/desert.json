@@ -45,6 +45,7 @@
     {"position": [6, 12], "rotation": 103.0, "radius": 12,"name": "desert-rock", "type": "circle", "graphic": "desert-rock"}
 
   ],
+  "units": 500,
   "base": [400, 250],
   "back-sound": "wind"
 }

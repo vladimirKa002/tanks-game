@@ -1,0 +1,5 @@
+{
+  "hit": {"shape":  [0.3, 0.3]},
+  "gun_shot": {"shape":  [0.3, 0.566]},
+  "damage": {"shape":  "full"}
+}

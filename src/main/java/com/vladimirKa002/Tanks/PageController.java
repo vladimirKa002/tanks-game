@@ -45,22 +45,26 @@ public class PageController {
             throws Exception {
         Game game = Game.games.get(room_id.get());
         if (game == null) return ResponseEntity.ok(new ResponseMessage("GameNotFound", "The game was not found!"));
-        return ResponseEntity.ok(new ResponseGameInit(getImages(game), getAudios(game), game.getState(), game.getField().getMap()));
+        return ResponseEntity.ok(new ResponseGameInit(
+                getImages(game), getAudios(game), game.getState(), game.getMap().getMapString()));
     }
+
+    private final HashMap<String, String> resourcesStorage = new HashMap<>(50);
 
     private HashMap<String, String> getImages(Game game) throws IOException {
         HashMap<String, String> images = new HashMap<>();
 
-        addResource(images, "game\\graphics\\" + game.getField().getType() + "-field.png", "field");
+        addResource(images, "game\\graphics\\" + game.getMap().getType() + "-map.png", "map");
 
         addResource(images, "game\\graphics\\victory.png", "victory");
         addResource(images, "game\\graphics\\defeat.png", "defeat");
         addResource(images, "game\\graphics\\gun_shot.png", "hit");
+        addResource(images, "game\\graphics\\damage.png", "damage");
         addResource(images, "game\\graphics\\gun_shot2.png", "gun_shot");
         addResource(images, "game\\graphics\\tanks\\destroyed_head.png", "destroyed_head");
         addResource(images, "game\\graphics\\tanks\\destroyed_body.png", "destroyed_body");
 
-        for (String graphic : game.getField().getGraphics()) {
+        for (String graphic : game.getMap().getGraphics()) {
             String gr = graphic.replaceAll("//", "\\");
             addResource(images, "game\\graphics\\" + gr + ".png", graphic);
         }
@@ -78,16 +82,23 @@ public class PageController {
         HashMap<String, String> audios = new HashMap<>();
         addResource(audios, "game\\audio\\shot.mp3", "shot");
         addResource(audios, "game\\audio\\air-alert.mp3", "air-alert");
-        addResource(audios, "game\\audio\\background\\" + game.getField().getBackSound() + ".mp3", "back-sound");
+        addResource(audios, "game\\audio\\background\\" + game.getMap().getBackSound() + ".mp3", "back-sound");
         return audios;
     }
 
     private void addResource(HashMap<String, String> images, String path, String name) throws IOException {
+        if (resourcesStorage.containsKey(path)) {
+            images.put(name, resourcesStorage.get(path));
+            return;
+        }
+
         ResourceLoader resourceLoader = new DefaultResourceLoader();
         Resource resource = resourceLoader.getResource("classpath:" + path);
 
         byte[] buffer = FileCopyUtils.copyToByteArray(resource.getInputStream());
-        images.put(name, Base64.getEncoder().encodeToString(buffer));
+        String result = Base64.getEncoder().encodeToString(buffer);
+        images.put(name, result);
+        resourcesStorage.put(path, result);
     }
 
     /**

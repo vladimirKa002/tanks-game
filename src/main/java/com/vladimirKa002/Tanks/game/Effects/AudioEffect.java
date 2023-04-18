@@ -1,10 +1,9 @@
-package com.vladimirKa002.Tanks.game;
+package com.vladimirKa002.Tanks.game.Effects;
 
-public class AudioEffect {
-    private final String name;
+public class AudioEffect extends Effect {
 
     public AudioEffect(String name){
-        this.name = name;
+        super(name);
     }
 
     @Override

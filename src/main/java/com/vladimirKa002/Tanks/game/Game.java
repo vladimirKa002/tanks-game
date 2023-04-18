@@ -1,7 +1,10 @@
 package com.vladimirKa002.Tanks.game;
 
+import com.vladimirKa002.Tanks.GameResources;
 import com.vladimirKa002.Tanks.PageController;
 import com.vladimirKa002.Tanks.TanksApplication;
+import com.vladimirKa002.Tanks.game.Effects.AudioEffect;
+import com.vladimirKa002.Tanks.game.Effects.VisualEffect;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -15,7 +18,7 @@ public class Game implements Runnable{
     private final HashMap<String, Tank> tanksMap = new HashMap<>();
 
     private String state = "not started";
-    private final Field field;
+    private final Map map;
 
     private final HashMap<String, List<Tank>> teams = new HashMap<>();
 
@@ -29,9 +32,9 @@ public class Game implements Runnable{
     public Game(int playersNum) {
         id = TanksApplication.getId();
         games.put(id, this);
-        field = new Field();
+        map = GameResources.getInstance().getRandomMap();
 
-        base = new Base(field.getBasePosition(), this);
+        base = new Base(map.getBasePosition(), this);
 
         tanks = new Tank[playersNum];
 
@@ -48,8 +51,8 @@ public class Game implements Runnable{
         teams.put(team2, new ArrayList<>(playersNum / 2));
 
         HashMap<String, List<double[]>> tanksPositions = new HashMap<>();
-        tanksPositions.put(team1, field.getTanksPositions_teams().get(0));
-        tanksPositions.put(team2, field.getTanksPositions_teams().get(1));
+        tanksPositions.put(team1, map.getTanksPositions_teams().get(0));
+        tanksPositions.put(team2, map.getTanksPositions_teams().get(1));
 
         ArrayList<String> teamsN = new ArrayList<>(playersNum);
         for (int i = 0; i < playersNum / 2; i++) {
@@ -60,8 +63,7 @@ public class Game implements Runnable{
         for (int i = 0; i < playersNum; i++) {
             String tName = teamsN.remove(rnd.nextInt(teamsN.size()));
             tanks[i] = new Tank(tanksPositions.get(tName).remove(
-                    rnd.nextInt(tanksPositions.get(tName).size())), field.getType(), tName,
-                    field.getUnits());
+                    rnd.nextInt(tanksPositions.get(tName).size())), tName, this);
             teams.get(tName).add(tanks[i]);
         }
     }
@@ -158,7 +160,7 @@ public class Game implements Runnable{
         return "{\"tanks\": " + Arrays.toString(tanks) + ", " +
                 "\"state\": \"" + state + "\", " +
                 "\"winner\": \"" + winner + "\", " +
-                "\"field\": " + field.toString() + ", " +
+                "\"map\": " + map.toString() + ", " +
                 "\"base\": " + base.toString() + ", " +
                 "\"projectiles\": [" + projectiles.stream().map(Object::toString)
                 .collect(Collectors.joining(", ")) + "] " + ", " +
@@ -243,27 +245,27 @@ public class Game implements Runnable{
             switch (action) {
                 case "forward":
                     tank.move(1);
-                    tank.checkCollisions(Arrays.asList(tanks), field.getArea(), "mov");
-                    tank.checkPosition(field.getUnits());
+                    tank.checkCollisions(Arrays.asList(tanks), map.getArea(), "mov");
+                    tank.checkPosition(map.getUnits());
                     break;
                 case "backward":
                     tank.move(-1);
-                    tank.checkCollisions(Arrays.asList(tanks), field.getArea(), "mov");
-                    tank.checkPosition(field.getUnits());
+                    tank.checkCollisions(Arrays.asList(tanks), map.getArea(), "mov");
+                    tank.checkPosition(map.getUnits());
                     break;
                 case "right":
                     tank.rotateTank(1);
-                    tank.checkCollisions(Arrays.asList(tanks), field.getArea(), "rot");
+                    tank.checkCollisions(Arrays.asList(tanks), map.getArea(), "rot");
                     break;
                 case "left":
                     tank.rotateTank(-1);
-                    tank.checkCollisions(Arrays.asList(tanks), field.getArea(), "rot");
+                    tank.checkCollisions(Arrays.asList(tanks), map.getArea(), "rot");
                     break;
                 case "head_right":
                     tank.rotateHead(1);
                     break;
                 case "shot":
-                    tank.shot(this);
+                    tank.shot();
                     break;
                 case "head_left":
                     tank.rotateHead(-1);
@@ -284,8 +286,8 @@ public class Game implements Runnable{
         return tanksMap.get(user);
     }
 
-    public Field getField(){
-        return field;
+    public Map getMap(){
+        return map;
     }
 
     public Base getBase() {
