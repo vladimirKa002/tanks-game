@@ -55,7 +55,7 @@ public class Map {
     }
 
     public List<List<double[]>> getTanksPositions_teams() {
-        return tanksPositions_teams;
+        return new ArrayList<>(tanksPositions_teams);
     }
 
     public String getType(){
