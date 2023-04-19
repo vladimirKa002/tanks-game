@@ -1,6 +1,7 @@
 package com.vladimirKa002.Tanks;
 
 import com.vladimirKa002.Tanks.game.*;
+import com.vladimirKa002.Tanks.game.Effects.VisualEffect;
 import com.vladimirKa002.Tanks.game.Map;
 import org.springframework.boot.configurationprocessor.json.JSONArray;
 import org.springframework.boot.configurationprocessor.json.JSONException;
@@ -23,7 +24,7 @@ public class GameResources {
     private static GameResources gameResources;
 
     private final List<Map> maps = new ArrayList<>(MAPS.length);
-    private final HashMap<String, double[]> visualEffects = new HashMap<>();
+    private final HashMap<String, VisualEffect.VisualEffectInfo> visualEffects = new HashMap<>();
 
     private GameResources(){
         loadMaps();
@@ -156,7 +157,8 @@ public class GameResources {
                         JSONArray jsonArray = (JSONArray) object.get("shape");
                         shape = new double[]{jsonArray.getDouble(0), jsonArray.getDouble(1)};
                     }
-                    visualEffects.put(name, shape);
+                    double duration = object.optDouble("duration", VisualEffect.DEFAULT_VISUAL_EFFECT_DURATION);
+                    visualEffects.put(name, new VisualEffect.VisualEffectInfo(shape, duration));
                 }
                 catch (JSONException e){
                     e.printStackTrace();
@@ -168,7 +170,7 @@ public class GameResources {
         }
     }
 
-    public double[] getVisualEffectSize(String name){
+    public VisualEffect.VisualEffectInfo getVisualEffectInfo(String name){
         return visualEffects.get(name);
     }
 

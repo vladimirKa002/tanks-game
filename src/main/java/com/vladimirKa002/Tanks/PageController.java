@@ -60,6 +60,7 @@ public class PageController {
         addResource(images, "game\\graphics\\game-end\\defeat.png", "defeat");
         addResource(images, "game\\graphics\\game-end\\draw.png", "draw");
 
+        addResource(images, "game\\graphics\\tank-expl.gif", "tank-expl");
         addResource(images, "game\\graphics\\gun_shot.png", "hit");
         addResource(images, "game\\graphics\\damage.png", "damage");
         addResource(images, "game\\graphics\\gun_shot2.png", "gun_shot");
