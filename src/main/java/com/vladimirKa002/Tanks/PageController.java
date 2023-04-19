@@ -60,7 +60,7 @@ public class PageController {
         addResource(images, "game\\graphics\\game-end\\defeat.png", "defeat");
         addResource(images, "game\\graphics\\game-end\\draw.png", "draw");
 
-        addResource(images, "game\\graphics\\tank-expl.gif", "tank-expl");
+        // addResource(images, "game\\graphics\\tank-expl.gif", "tank-expl");
         addResource(images, "game\\graphics\\gun_shot.png", "hit");
         addResource(images, "game\\graphics\\damage.png", "damage");
         addResource(images, "game\\graphics\\gun_shot2.png", "gun_shot");
@@ -83,6 +83,7 @@ public class PageController {
 
     private HashMap<String, String> getAudios(Game game) throws IOException {
         HashMap<String, String> audios = new HashMap<>();
+        addResource(audios, "game\\audio\\expl-tank.mp3", "expl-tank");
         addResource(audios, "game\\audio\\shot.mp3", "shot");
         addResource(audios, "game\\audio\\air-alert.mp3", "air-alert");
         addResource(audios, "game\\audio\\background\\" + game.getMap().getBackSound() + ".mp3", "back-sound");

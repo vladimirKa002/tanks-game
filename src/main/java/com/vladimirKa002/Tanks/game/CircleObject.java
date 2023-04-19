@@ -1,5 +1,7 @@
 package com.vladimirKa002.Tanks.game;
 
+import com.vladimirKa002.Tanks.game.Static.Static;
+
 import java.awt.geom.Area;
 import java.awt.geom.Ellipse2D;
 

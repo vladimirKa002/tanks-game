@@ -1,4 +1,6 @@
-package com.vladimirKa002.Tanks.game;
+package com.vladimirKa002.Tanks.game.Static;
+
+import com.vladimirKa002.Tanks.game.RectangleObject;
 
 import java.util.Arrays;
 

@@ -141,7 +141,11 @@ public class Tank extends RectangleObject{
         int pos = game.getMap().getUnits() / 2;
         game.addVisualEffect(new VisualEffect(new double[]{pos, pos}, 0, "damage", id + ""));
         health -= damage;
-        if (health < 0) health = 0;
+        if (health <= 0) {
+            health = 0;
+            // game.addVisualEffect(new VisualEffect(new double[]{pos, pos}, 0, "expl-tank", Effect.EFFECT_TO_ALL));
+            // game.addAudioEffect(new AudioEffect("expl-tank", Effect.EFFECT_TO_ALL));
+        }
     }
 
     public int getHealth(){
@@ -184,7 +188,7 @@ public class Tank extends RectangleObject{
 
         game.addProjectile(new Projectile(position.clone(), angle, this, game));
         game.addVisualEffect(new VisualEffect(shotPosition.clone(), angle, "gun_shot", Effect.EFFECT_TO_ALL));
-        game.addAudio(new AudioEffect("shot", Effect.EFFECT_TO_ALL));
+        game.addAudioEffect(new AudioEffect("shot", Effect.EFFECT_TO_ALL));
 
         reloadingProgress = 0;
         reloadingTime = 0;

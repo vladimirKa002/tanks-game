@@ -1,11 +1,13 @@
 package com.vladimirKa002.Tanks.game;
 
+import com.vladimirKa002.Tanks.game.Static.StaticCircleObject;
+
 import java.awt.geom.Area;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 
-public class Base extends StaticCircleObject{
+public class Base extends StaticCircleObject {
     private final Game game;
     private static final int COLLISION_RADIUS = 35;
     private static final int RADIUS = 50;

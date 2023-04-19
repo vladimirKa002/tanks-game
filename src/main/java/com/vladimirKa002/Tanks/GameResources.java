@@ -3,6 +3,8 @@ package com.vladimirKa002.Tanks;
 import com.vladimirKa002.Tanks.game.*;
 import com.vladimirKa002.Tanks.game.Effects.VisualEffect;
 import com.vladimirKa002.Tanks.game.Map;
+import com.vladimirKa002.Tanks.game.Static.StaticCircleObject;
+import com.vladimirKa002.Tanks.game.Static.StaticRectangleObject;
 import org.springframework.boot.configurationprocessor.json.JSONArray;
 import org.springframework.boot.configurationprocessor.json.JSONException;
 import org.springframework.boot.configurationprocessor.json.JSONObject;

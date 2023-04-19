@@ -151,7 +151,7 @@ public class Game implements Runnable{
         visualEffects.add(visualEffect);
     }
 
-    public synchronized void addAudio(AudioEffect audioEffect){
+    public synchronized void addAudioEffect(AudioEffect audioEffect){
         this.audioEffects.add(audioEffect);
     }
 
@@ -196,8 +196,8 @@ public class Game implements Runnable{
                     if (state.equals("finished")) last_ticks++;
 
                     if (!state.equals("finished")) base.update();
-                    if (!state.equals("finished")) updateProjectiles();
                     updateEffects();
+                    if (!state.equals("finished")) updateProjectiles();
                     if (!state.equals("finished")) x: {
                         String captor = base.getCaptorWinner();
                         if (captor != null) {
