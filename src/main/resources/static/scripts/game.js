@@ -271,8 +271,11 @@ function updateGame(game_state){
         if (tankUser.team == game_state.winner) {
             img = graphics["victory"]
         }
-        else {
+        else if (game_state.winner != "null") {
             img = graphics["defeat"]
+        }
+        else {
+            img = graphics["draw"]
         }
         drawImageAtAngle(0, canvas.width / 2, canvas.height / 2, img.width, img.height,
             img, ctx)
@@ -280,6 +283,8 @@ function updateGame(game_state){
     }
 
     setAliveTanksUI(allies_alive, allies_total, enemies_alive, enemies_total);
+
+    setTimeLeftUI(game_state.time)
 
     updated = true;
 }
@@ -514,7 +519,7 @@ function setAliveTanksUI(allies_alive, allies_total, enemies_alive, enemies_tota
         teams_info+="<span class=\"circle green\"></span>"
     }
     for (var i = 0; i < allies_total - allies_alive; i++) {
-        teams_info+="<span class=\"circle red\"></span>"
+        teams_info+="<span class=\"circle grey\"></span>"
     }
 
     if (tankUser.health > 0) {
@@ -527,10 +532,10 @@ function setAliveTanksUI(allies_alive, allies_total, enemies_alive, enemies_tota
 
     teams_info += "</td></tr><tr>" + td + teamOpponent + "</td>" + td
     for (var i = 0; i < enemies_alive; i++) {
-        teams_info+="<span class=\"circle green\"></span>"
+        teams_info+="<span class=\"circle red\"></span>"
     }
     for (var i = 0; i < enemies_total - enemies_alive; i++) {
-        teams_info+="<span class=\"circle red\"></span>"
+        teams_info+="<span class=\"circle grey\"></span>"
     }
     teams_info += "</td></tr></table>"
     document.getElementById('teams_block').innerHTML = teams_info;
@@ -544,6 +549,13 @@ function setAliveTanksUI(allies_alive, allies_total, enemies_alive, enemies_tota
 
     document.getElementById('user_block').innerHTML = user_info
     document.getElementById('you_title').innerHTML = "You " + tankUser.team;
+}
+
+// Setting time left
+function setTimeLeftUI(time){
+    if (time <= 10)
+        document.getElementById('time_block').innerHTML = "<div class=\"text red\">" + time + "</div>";
+    else document.getElementById('time_block').innerHTML = time
 }
 
 

@@ -20,10 +20,11 @@ public class Game implements Runnable{
 
     private String state = "not started";
     private final Map map;
+    private final Base base;
+    private final Timer timer;
 
     private final HashMap<String, List<Tank>> teams = new HashMap<>();
 
-    private Base base = null;
 
     /**
      * Creating tanks (without setting users) and assigning them to teams
@@ -52,8 +53,8 @@ public class Game implements Runnable{
         teams.put(team2, new ArrayList<>(playersNum / 2));
 
         HashMap<String, List<double[]>> tanksPositions = new HashMap<>();
-        tanksPositions.put(team1, map.getTanksPositions_teams().get(0));
-        tanksPositions.put(team2, map.getTanksPositions_teams().get(1));
+        tanksPositions.put(team1, map.getTanksPositions_teamOne());
+        tanksPositions.put(team2, map.getTanksPositions_teamTwo());
 
         ArrayList<String> teamsN = new ArrayList<>(playersNum);
         for (int i = 0; i < playersNum / 2; i++) {
@@ -67,6 +68,8 @@ public class Game implements Runnable{
                     rnd.nextInt(tanksPositions.get(tName).size())), tName, this);
             teams.get(tName).add(tanks[i]);
         }
+
+        timer = new Timer(map.getTime(), FPS);
     }
 
     /**
@@ -159,6 +162,7 @@ public class Game implements Runnable{
      */
     public synchronized String getState(){
         return "{\"tanks\": " + Arrays.toString(tanks) + ", " +
+                "\"time\": \"" + timer.getTime() + "\", " +
                 "\"state\": \"" + state + "\", " +
                 "\"winner\": \"" + winner + "\", " +
                 "\"map\": " + map.toString() + ", " +
@@ -184,6 +188,7 @@ public class Game implements Runnable{
     @Override
     public void run() {
         int last_ticks = 0;
+        timer.start();
 
         try {
             while (!state.equals("finished") || last_ticks < LAST_TICKS) {
@@ -219,11 +224,17 @@ public class Game implements Runnable{
                             base.update();
                             winner = aliveTeams.get(0);
                             finishGame();
+                            break x;
+                        }
+                        // Updating the timer
+                        timer.update();
+                        if (timer.finished()) {
+                            finishGame();
                         }
                     }
                     Thread.sleep(1000/FPS);
                 }
-                catch (InterruptedException e) {
+                catch (InterruptedException ignored) {
                 }
             }
         }

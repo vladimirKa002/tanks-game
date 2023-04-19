@@ -43,13 +43,16 @@ public class GameResources {
     private static final String[] MAPS = {"forest", "city", "desert"};
 
     private void loadMaps(){
+        Random rnd = new Random();
+
         for (String type: MAPS){
             ArrayList<CollisionObject> obstacles = new ArrayList<>(50);
             HashSet<String> graphics = new HashSet<>(10);
             Area area = new Area();
             String backSoundName = null;
             double[] basePosition;
-            int units = 500;
+            int units = Map.DEFAULT_UNITS;
+            int time = Map.DEFAULT_GAME_TIME;
 
             ResourceLoader resourceLoader = new DefaultResourceLoader();
             Resource resource = resourceLoader.getResource("classpath:game/maps/" + type + ".json");
@@ -61,50 +64,40 @@ public class GameResources {
                     if (objects.has("active")) {
                         continue;
                     }
-                    double radius = 0;
-                    if (objects.has("radius")) {
-                        radius = objects.getDouble("radius");
-                    }
-                    String graphic = null;
-                    if (objects.has("graphic")) {
-                        graphic = objects.getString("graphic");
-                    }
+                    String graphic = objects.getString("graphic");
+
                     JSONArray jsonArray = (JSONArray) objects.get("position");
                     double[] position = new double[]{jsonArray.getDouble(0), jsonArray.getDouble(1)};
 
+                    // Setting size options
                     double[] shape = null;
+                    double[] shapeCollision = null;
                     if (objects.has("shape")) {
                         jsonArray = (JSONArray) objects.get("shape");
                         shape = new double[]{jsonArray.getDouble(0), jsonArray.getDouble(1)};
+
+                        jsonArray = objects.optJSONArray("shapeCollision");
+                        if (jsonArray == null) shapeCollision = shape.clone();
+                        else shapeCollision = new double[]{jsonArray.getDouble(0), jsonArray.getDouble(1)};
+                    }
+                    double radius = 0;
+                    double radiusCollision = 0;
+                    if (objects.has("radius")) {
+                        radius = objects.getDouble("radius");
+                        radiusCollision = objects.optDouble("radiusCollision", radius);
                     }
 
-                    double[] shapeItem = null;
-                    if (objects.has("shapeItem")) {
-                        jsonArray = (JSONArray) objects.get("shapeItem");
-                        shapeItem = new double[]{jsonArray.getDouble(0), jsonArray.getDouble(1)};
-                    }
-
-                    double rotation = objects.getDouble("rotation");
-                    if (objects.getString("name").equals("tree"))
-                        obstacles.add(new Tree(position, graphic));
-                    else if (objects.getString("name").equals("hut"))
-                        obstacles.add(new Hut(position, rotation));
-                    else if (objects.getString("name").equals("desert-rock"))
-                        obstacles.add(new Rock(position, rotation, radius, graphic));
-                    else if (objects.getString("name").equals("car")) {
-                        Car car = new Car(position, rotation);
-                        obstacles.add(car);
-                        graphic = car.getGraphics();
-                    }
-                    else if (objects.getString("name").equals("building")) {
-                        Building building = new Building(position, rotation, shapeItem, shape,
-                                "buildings/" + objects.getString("graphics"));
-                        obstacles.add(building);
-                        graphic = building.getGraphics();
-                    }
+                    String name = objects.getString("name");
+                    String _type = objects.getString("type");
+                    double rotation = objects.optDouble("rotation", rnd.nextInt(360));
+                    if (_type.equals("circle"))
+                        obstacles.add(new StaticCircleObject(position, rotation, radiusCollision, radius, graphic, name));
+                    else if (_type.equals("rectangle"))
+                        obstacles.add(new StaticRectangleObject(position, rotation, shapeCollision, shape, graphic, name));
                     graphics.add(graphic);
                 }
-                units = data.getInt("units");
+                units = data.optInt("units", units);
+                time = data.optInt("time", time);
                 JSONArray jsonArray = data.getJSONArray("base");
                 basePosition = new double[]{jsonArray.getDouble(0), jsonArray.getDouble(1)};
                 backSoundName = data.getString("back-sound");
@@ -117,8 +110,23 @@ public class GameResources {
                 area.add(obstacle.getShape());
             }
 
-            maps.add(new Map(units, type, graphics, obstacles, area, basePosition, backSoundName));
+            maps.add(new Map(units, type, graphics, obstacles, area, basePosition, backSoundName, time));
         }
+    }
+
+    private HashMap<String, List<String>> getRandomGraphics(JSONObject rndGraphics) throws JSONException {
+        HashMap<String, List<String>> randomGraphics = new HashMap<>();
+        if (rndGraphics == null) return randomGraphics;
+        Iterator iterator = rndGraphics.keys();
+        while (iterator.hasNext()){
+            String name = (String) iterator.next();
+            JSONArray graphs = rndGraphics.getJSONArray(name);
+            List<String> graphics = new ArrayList<>(graphs.length());
+            for (int i = 0; i < graphs.length(); i++)
+                graphics.add(graphs.getString(i));
+            randomGraphics.put(name, graphics);
+        }
+        return randomGraphics;
     }
 
     public Map getRandomMap(){

@@ -54,10 +54,12 @@ public class PageController {
     private HashMap<String, String> getImages(Game game) throws IOException {
         HashMap<String, String> images = new HashMap<>();
 
-        addResource(images, "game\\graphics\\" + game.getMap().getType() + "-map.png", "map");
+        addResource(images, "game\\graphics\\maps\\" + game.getMap().getType() + "-map.png", "map");
 
-        addResource(images, "game\\graphics\\victory.png", "victory");
-        addResource(images, "game\\graphics\\defeat.png", "defeat");
+        addResource(images, "game\\graphics\\game-end\\victory.png", "victory");
+        addResource(images, "game\\graphics\\game-end\\defeat.png", "defeat");
+        addResource(images, "game\\graphics\\game-end\\draw.png", "draw");
+
         addResource(images, "game\\graphics\\gun_shot.png", "hit");
         addResource(images, "game\\graphics\\damage.png", "damage");
         addResource(images, "game\\graphics\\gun_shot2.png", "gun_shot");
@@ -119,12 +121,12 @@ public class PageController {
         if (game_mode_param.equals("2x2")) playerNum = 4;
         else playerNum = 2;
 
-        /*if (true) {
+        if (true) {
             Game game = new Game(playerNum);
             game.setTankUser(session_id);
             game.startGame();
             return ResponseEntity.ok(new ResponseSession(session_id, game.id, false, 0, 0));
-        }*/
+        }
 
         for (Game value : Game.games.values()) {
             if (value.getTanks().length != playerNum) continue;

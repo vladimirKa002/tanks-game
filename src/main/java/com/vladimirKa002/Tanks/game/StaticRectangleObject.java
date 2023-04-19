@@ -2,7 +2,7 @@ package com.vladimirKa002.Tanks.game;
 
 import java.util.Arrays;
 
-public abstract class StaticRectangleObject extends RectangleObject implements Static{
+public class StaticRectangleObject extends RectangleObject implements Static{
     private final double[] shape; // Image size (can be slightly larger than collision size)
     protected final String graphics;
     private final String name;

@@ -2,7 +2,7 @@ package com.vladimirKa002.Tanks.game;
 
 import java.util.Arrays;
 
-public abstract class StaticCircleObject extends CircleObject implements Static{
+public class StaticCircleObject extends CircleObject implements Static{
     private final double radius; // Image radius (can be slightly larger than collision size)
     protected final String graphics;
     private final String name;

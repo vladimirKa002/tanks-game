@@ -4,6 +4,9 @@ import java.awt.geom.Area;
 import java.util.*;
 
 public class Map {
+    public static final int DEFAULT_UNITS = 500;
+    public static final int DEFAULT_GAME_TIME = 60;
+
     private final int units;
     private final String type;
     private final HashSet<String> graphics;
@@ -11,6 +14,7 @@ public class Map {
     private final Area area;
     private final double[] basePosition;
     private final String backSoundName;
+    private final int time;
 
     // Prebaked data
     private final String mapString;
@@ -25,7 +29,8 @@ public class Map {
             ArrayList<CollisionObject> obstacles,
             Area area,
             double[] basePosition,
-            String backSoundName){
+            String backSoundName,
+            int time){
         this.units = units;
         this.type = type;
         this.graphics = graphics;
@@ -33,6 +38,7 @@ public class Map {
         this.basePosition = basePosition;
         this.backSoundName = backSoundName;
         this.obstacles = obstacles;
+        this.time = time;
 
         mapString = "{" +
                 "\"units\": " + units +
@@ -54,8 +60,18 @@ public class Map {
         tanksPositions_teams.add(l2);
     }
 
-    public List<List<double[]>> getTanksPositions_teams() {
-        return new ArrayList<>(tanksPositions_teams);
+    public List<double[]> getTanksPositions_teamOne() {
+        List<double[]> newList = new ArrayList<>(3);
+        for (double[] ds : tanksPositions_teams.get(0))
+            newList.add(ds.clone());
+        return newList;
+    }
+
+    public List<double[]> getTanksPositions_teamTwo() {
+        List<double[]> newList = new ArrayList<>(3);
+        for (double[] ds : tanksPositions_teams.get(1))
+            newList.add(ds.clone());
+        return newList;
     }
 
     public String getType(){
@@ -80,6 +96,10 @@ public class Map {
 
     public String getBackSound(){
         return backSoundName;
+    }
+
+    public int getTime(){
+        return time;
     }
 
     @Override

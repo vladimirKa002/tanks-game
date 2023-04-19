@@ -18,6 +18,9 @@ body{
     font-size: 16px;
     color: white;
 }
+.text.red{
+    color: red;
+}
 .input_elem{
     font-family: Open Sans,sans-serif;
     font-size: 16px;
@@ -149,4 +152,7 @@ body{
 }
 .circle.blue {
     background-color: DodgerBlue;
+}
+.circle.grey {
+    background-color: grey;
 }

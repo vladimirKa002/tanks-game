@@ -23,6 +23,11 @@
     <canvas id="canvas_game"></canvas>
     <div style="width: 50px;"></div>
     <div class="tools">
+        <div class="title_text_small">Time</div>
+        <br>
+        <div class="text" id="time_block"></div>
+        <br>
+        <br>
         <div class="title_text_small">Teams</div>
         <br>
         <div class="text" id="teams_block"></div>

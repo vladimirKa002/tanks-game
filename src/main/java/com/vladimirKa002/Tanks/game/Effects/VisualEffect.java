@@ -13,9 +13,7 @@ public class VisualEffect extends Effect {
         super(position, rotation, name, toWhom);
 
         double[] shape = GameResources.getInstance().getVisualEffectSize(name);
-        if (shape[0] == Double.MAX_VALUE){
-            this.shape = new double[]{1000 * sizeMultiplier, 1000 * sizeMultiplier};
-        }
+        if (shape[0] == Double.MAX_VALUE) this.shape = new double[]{1000, 1000};
         else this.shape = new double[]{shape[0] * sizeMultiplier, shape[1] * sizeMultiplier};
     }
 
