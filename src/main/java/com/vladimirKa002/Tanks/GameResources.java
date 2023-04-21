@@ -23,9 +23,10 @@ import java.util.*;
 import static java.nio.charset.StandardCharsets.UTF_8;
 
 public class GameResources {
+    private static final Random rnd = new Random();
     private static GameResources gameResources;
 
-    private final List<Map> maps = new ArrayList<>(MAPS.length);
+    private final HashMap<String, List<Map>> maps = new HashMap<>();
     private final HashMap<String, VisualEffect.VisualEffectInfo> visualEffects = new HashMap<>();
 
     private GameResources(){
@@ -46,21 +47,22 @@ public class GameResources {
     private static final String[] MAPS = {"forest", "city", "desert"};
 
     private void loadMaps(){
-        Random rnd = new Random();
-
-        for (String type: MAPS){
-            ArrayList<CollisionObject> obstacles = new ArrayList<>(50);
+        for (String mapName: MAPS){
             HashSet<String> graphics = new HashSet<>(10);
+            ArrayList<CollisionObject> obstacles = new ArrayList<>(50);
+            List<List<double[]>> tanksPositions_teams = new ArrayList<>(2);
             Area area = new Area();
             String backSoundName = null;
             double[] basePosition;
+            int[] playersAmount = new int[2];
             int units = Map.DEFAULT_UNITS;
-            int time = Map.DEFAULT_GAME_TIME;
+            String size = null;
 
             ResourceLoader resourceLoader = new DefaultResourceLoader();
-            Resource resource = resourceLoader.getResource("classpath:game/maps/" + type + ".json");
+            Resource resource = resourceLoader.getResource("classpath:game/maps/" + mapName + ".json");
             try {
                 JSONObject data = new JSONObject(resourceAsString(resource));
+
                 JSONArray obstaclesData = data.getJSONArray("obstacles");
                 for(int i = 0; i < obstaclesData.length(); i++) {
                     JSONObject objects = obstaclesData.getJSONObject(i);
@@ -99,10 +101,31 @@ public class GameResources {
                         obstacles.add(new StaticRectangleObject(position, rotation, shapeCollision, shape, graphic, name));
                     graphics.add(graphic);
                 }
+
+                JSONObject tanksPos = data.getJSONObject("tanks-pos");
+                for (int i = 1; i <= 2; i++){
+                    JSONArray team1 = tanksPos.getJSONArray("team" + i);
+                    List<double[]> positions = new ArrayList<>(2);
+                    for(int j = 0; j < team1.length(); j++) {
+                        JSONObject objects = team1.getJSONObject(j);
+                        JSONArray jsonArray = (JSONArray) objects.get("position");
+                        double[] position = new double[]{jsonArray.getDouble(0), jsonArray.getDouble(1)};
+                        // double rotation = objects.optDouble("rotation", 0);
+                        positions.add(position);
+                    }
+                    tanksPositions_teams.add(positions);
+                }
+
+                JSONArray playersAmountJSON = data.getJSONArray("players");
+                playersAmount[0] = playersAmountJSON.getInt(0);
+                playersAmount[1] = playersAmountJSON.getInt(1);
+
+                size = data.getString("size").toLowerCase();
                 units = data.optInt("units", units);
-                time = data.optInt("time", time);
+
                 JSONArray jsonArray = data.getJSONArray("base");
                 basePosition = new double[]{jsonArray.getDouble(0), jsonArray.getDouble(1)};
+
                 backSoundName = data.getString("back-sound");
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -113,7 +136,21 @@ public class GameResources {
                 area.add(obstacle.getShape());
             }
 
-            maps.add(new Map(units, type, graphics, obstacles, area, basePosition, backSoundName, time));
+            Map map = new Map(
+                    units,
+                    playersAmount,
+                    mapName,
+                    size,
+                    graphics,
+                    obstacles,
+                    tanksPositions_teams,
+                    area,
+                    basePosition,
+                    backSoundName);
+
+            List<Map> maps_ = maps.getOrDefault(size, new ArrayList<>());
+            maps_.add(map);
+            maps.put(size, maps_);
         }
     }
 
@@ -132,9 +169,9 @@ public class GameResources {
         return randomGraphics;
     }
 
-    public Map getRandomMap(){
-        Random rnd = new Random();
-        return maps.get(rnd.nextInt(MAPS.length));
+    public Map getRandomMap(String size){
+        size = size.toLowerCase();
+        return maps.get(size).get(rnd.nextInt(MAPS.length));
     }
 
 

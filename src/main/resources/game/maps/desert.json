@@ -1,4 +1,19 @@
 {
+  "size": "small",
+  "tanks-pos": {
+    "team1": [
+      {"position": [50, 50]},
+      {"position": [250, 50]},
+      {"position": [450, 50]}
+    ],
+    "team2": [
+      {"position": [50, 450]},
+      {"position": [250, 450]},
+      {"position": [450, 450]}
+    ]
+  },
+  "players": [1, 2],
+
   "obstacles" :[
     {"position": [412.0, 125.0], "rotation": 75.0, "radius": 19.5,"name": "desert-rock", "type": "circle", "graphic": "props/desert-rock"},
     {"position": [354, 204], "rotation": 75.0, "radius": 19.5,"name": "desert-rock", "type": "circle", "graphic": "props/desert-rock"},

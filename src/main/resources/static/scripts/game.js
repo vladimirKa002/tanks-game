@@ -553,9 +553,13 @@ function setAliveTanksUI(allies_alive, allies_total, enemies_alive, enemies_tota
 
 // Setting time left
 function setTimeLeftUI(time){
-    if (time <= 10)
-        document.getElementById('time_block').innerHTML = "<div class=\"text red\">" + time + "</div>";
-    else document.getElementById('time_block').innerHTML = time
+    let minutes = Math.floor(time / 60);
+    let seconds = time % 60;
+    if (minutes < 10) minutes = "0" + minutes
+    if (seconds < 10) seconds = "0" + seconds
+    const strTime = minutes + ":" + seconds
+    if (time <= 10) document.getElementById('time_block').innerHTML = "<div class=\"text red\">" + strTime + "</div>";
+    else document.getElementById('time_block').innerHTML = strTime
 }
 
 

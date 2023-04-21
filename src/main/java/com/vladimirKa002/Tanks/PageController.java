@@ -54,7 +54,7 @@ public class PageController {
     private HashMap<String, String> getImages(Game game) throws IOException {
         HashMap<String, String> images = new HashMap<>();
 
-        addResource(images, "game\\graphics\\maps\\" + game.getMap().getType() + "-map.png", "map");
+        addResource(images, "game\\graphics\\maps\\" + game.getMap().getName() + "-map.png", "map");
 
         addResource(images, "game\\graphics\\game-end\\victory.png", "victory");
         addResource(images, "game\\graphics\\game-end\\defeat.png", "defeat");
@@ -119,18 +119,15 @@ public class PageController {
                                        @RequestParam("game_mode") String game_mode_param) {
         String session_id = session_id_param.orElseGet(TanksApplication::getId);
 
-        int playerNum;
-        if (game_mode_param.equals("2x2")) playerNum = 4;
-        else playerNum = 2;
-
         if (true) {
-            Game game = new Game(playerNum);
+            Game game = new Game(game_mode_param);
             game.setTankUser(session_id);
             game.startGame();
             return ResponseEntity.ok(new ResponseSession(session_id, game.id, false, 0, 0));
         }
 
         for (Game value : Game.games.values()) {
+            int playerNum = value.getTanksAmount();
             if (value.getTanks().length != playerNum) continue;
             if (value.getPlayState().equals("not started")) {
                 value.setTankUser(session_id);
@@ -146,7 +143,8 @@ public class PageController {
                 return ResponseEntity.ok(new ResponseSession(session_id, value.id, true, num, playerNum));
             }
         }
-        Game game = new Game(playerNum);
+        Game game = new Game(game_mode_param);
+        int playerNum = game.getTanksAmount();
         game.setTankUser(session_id);
         return ResponseEntity.ok(new ResponseSession(session_id, game.id, true, 1, playerNum));
     }

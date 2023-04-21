@@ -29,12 +29,13 @@ public class Game implements Runnable{
     /**
      * Creating tanks (without setting users) and assigning them to teams
      *
-     * @param playersNum    amount of players
+     * @param size    size of the map
      */
-    public Game(int playersNum) {
+    public Game(String size) {
         id = TanksApplication.getId();
         games.put(id, this);
-        map = GameResources.getInstance().getRandomMap();
+        map = GameResources.getInstance().getRandomMap(size);
+        int playersNum = map.getPlayersAmount();
 
         base = new Base(map.getBasePosition(), this);
 
@@ -69,7 +70,8 @@ public class Game implements Runnable{
             teams.get(tName).add(tanks[i]);
         }
 
-        timer = new Timer(map.getTime(), FPS);
+        int time = playersNum / 2 * 60;
+        timer = new Timer(time, FPS);
     }
 
     /**
@@ -292,6 +294,10 @@ public class Game implements Runnable{
 
     public Tank[] getTanks(){
         return tanks;
+    }
+
+    public int getTanksAmount(){
+        return tanks.length;
     }
 
     public Tank getTank(String user){

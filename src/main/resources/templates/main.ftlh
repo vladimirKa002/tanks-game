@@ -15,8 +15,9 @@
     <br>
     <br>
     <form action="/waiting/page">
-        <input class="input_button" name="game_mode"  type="submit" value="Duel"/>
-        <input class="input_button right" name="game_mode" type="submit" value="2x2"/>
+        <input class="input_button" name="game_mode"  type="submit" value="Small"/>
+        <input class="input_button right" name="game_mode" type="submit" value="Medium"/>
+        <input class="input_button right" name="game_mode" type="submit" value="Large"/>
     </form>
 </div>
 </body>

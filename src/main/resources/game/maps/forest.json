@@ -1,4 +1,19 @@
 {
+  "size": "small",
+  "tanks-pos": {
+    "team1": [
+      {"position": [50, 50]},
+      {"position": [250, 50]},
+      {"position": [450, 50]}
+    ],
+    "team2": [
+      {"position": [50, 450]},
+      {"position": [250, 450]},
+      {"position": [450, 450]}
+    ]
+  },
+  "players": [1, 2],
+
   "obstacles" :[{"name": "tree", "type": "circle", "graphic": "props/green-tree", "position": [412.0, 125.0], "radius": 19.5, "radiusCollision": 16.25},
 {"name": "tree", "type": "circle", "graphic": "props/green-tree", "position": [478.0, 338.0], "radius": 19.5, "radiusCollision": 16.25},
 {"name": "tree", "type": "circle", "graphic": "props/green-tree", "position": [213.0, 315.0], "radius": 19.5, "radiusCollision": 16.25},

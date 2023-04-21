@@ -4,60 +4,52 @@ import java.awt.geom.Area;
 import java.util.*;
 
 public class Map {
+    private static final Random rnd = new Random();
     public static final int DEFAULT_UNITS = 500;
-    public static final int DEFAULT_GAME_TIME = 60;
 
     private final int units;
-    private final String type;
+    private final int[] playersAmount;
+    private final String name;
+    private final String size;
     private final HashSet<String> graphics;
     private final ArrayList<CollisionObject> obstacles;
     private final Area area;
     private final double[] basePosition;
     private final String backSoundName;
-    private final int time;
 
     // Prebaked data
     private final String mapString;
     private final String obstaclesString;
 
-    public final List<List<double[]>> tanksPositions_teams = new ArrayList<>(2);
+    public final List<List<double[]>> tanksPositions_teams;
 
     public Map(
             int units,
-            String type,
+            int[] playersAmount,
+            String name,
+            String size,
             HashSet<String> graphics,
             ArrayList<CollisionObject> obstacles,
+            List<List<double[]>> tanksPositions_teams,
             Area area,
             double[] basePosition,
-            String backSoundName,
-            int time){
+            String backSoundName){
         this.units = units;
-        this.type = type;
+        this.playersAmount = playersAmount;
+        this.name = name;
+        this.size = size;
         this.graphics = graphics;
         this.area = area;
         this.basePosition = basePosition;
         this.backSoundName = backSoundName;
         this.obstacles = obstacles;
-        this.time = time;
+        this.tanksPositions_teams = tanksPositions_teams;
 
         mapString = "{" +
                 "\"units\": " + units +
-                ", \"type\": \"" + type + '\"' +
+                ", \"name\": \"" + name + '\"' +
                 '}';
         obstaclesString = "{ \"obstacles\": " + obstacles + "}";
-
-        generateTanksPositions();
-    }
-
-    private void generateTanksPositions(){
-        double padding = 50;
-
-        ArrayList<double[]> l = new ArrayList<>(3);
-        l.add(new double[]{padding, padding}); l.add(new double[]{(double) units / 2, padding}); l.add(new double[]{units - padding, padding});
-        tanksPositions_teams.add(l);
-        ArrayList<double[]> l2 = new ArrayList<>(3);
-        l2.add(new double[]{padding, units - padding}); l2.add(new double[]{(double) units / 2, units - padding}); l2.add(new double[]{units - padding, units - padding});
-        tanksPositions_teams.add(l2);
     }
 
     public List<double[]> getTanksPositions_teamOne() {
@@ -74,8 +66,18 @@ public class Map {
         return newList;
     }
 
-    public String getType(){
-        return type;
+    public int getPlayersAmount(){
+        int min = playersAmount[0];
+        int max = playersAmount[1];
+        return (min + rnd.nextInt(max - min + 1)) * 2;
+    }
+
+    public String getName(){
+        return name;
+    }
+
+    public String getSize(){
+        return size;
     }
 
     public HashSet<String> getGraphics(){
@@ -96,10 +98,6 @@ public class Map {
 
     public String getBackSound(){
         return backSoundName;
-    }
-
-    public int getTime(){
-        return time;
     }
 
     @Override
