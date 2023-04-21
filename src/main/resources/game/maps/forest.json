@@ -12,7 +12,7 @@
       {"position": [450, 450]}
     ]
   },
-  "players": [1, 2],
+  "players": [1, 1],
 
   "obstacles" :[{"name": "tree", "type": "circle", "graphic": "props/green-tree", "position": [412.0, 125.0], "radius": 19.5, "radiusCollision": 16.25},
 {"name": "tree", "type": "circle", "graphic": "props/green-tree", "position": [478.0, 338.0], "radius": 19.5, "radiusCollision": 16.25},

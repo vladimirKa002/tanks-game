@@ -12,7 +12,7 @@
       {"position": [450, 450]}
     ]
   },
-  "players": [1, 2],
+  "players": [1, 1],
 
   "obstacles" :[
     {"position": [412.0, 125.0], "rotation": 75.0, "radius": 19.5,"name": "desert-rock", "type": "circle", "graphic": "props/desert-rock"},

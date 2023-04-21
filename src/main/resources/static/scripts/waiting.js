@@ -10,7 +10,7 @@ function connect(game_id) {
         stompClient.subscribe('/waiting.' + game_id, function(content) {
             data = JSON.parse(content.body)
             if (data.wait) {
-                setReady(data.ready, data.num)
+                setReadyPoints(data.ready, data.num)
             }
             else {
                 exit = false;
@@ -40,8 +40,14 @@ function disconnect(){
     }
 }
 
-// Setting UI
+// Setting UI - numbered
 function setReady(ready, num){
+    ready_info = 'Waiting for players: ' + ready + '/' + num
+    document.getElementById('ready_players').innerHTML = ready_info;
+}
+
+// Setting UI - points
+function setReadyPoints(ready, num){
     ready_info = 'Waiting for players...'
     var total = 0;
     for (var i = 0; i < ready; i++) {

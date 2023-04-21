@@ -107,7 +107,7 @@ public class PageController {
 
     /**
      * When user wants to join a game, a new game object is created and he starts waiting
-     *      or  he joins existing game. Player is assigned to one of tanks of a game.
+     *      or he joins existing game. Player is assigned to one of tanks of a game.
      *
      * @param session_id_param  if session id is not defined, create new one
      * @param game_mode_param   duel or 2x2
@@ -119,12 +119,12 @@ public class PageController {
                                        @RequestParam("game_mode") String game_mode_param) {
         String session_id = session_id_param.orElseGet(TanksApplication::getId);
 
-        /*if (true) {
+        if (true) {
             Game game = new Game(game_mode_param);
             game.setTankUser(session_id);
             game.startGame();
             return ResponseEntity.ok(new ResponseSession(session_id, game.id, false, 0, 0));
-        }*/
+        }
 
         for (Game value : Game.games.values()) {
             int playerNum = value.getTanksAmount();

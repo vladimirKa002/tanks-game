@@ -12,7 +12,7 @@
       {"position": [450, 450]}
     ]
   },
-  "players": [1, 2],
+  "players": [1, 1],
 
   "obstacles" : [
   {"name": "car", "type": "rectangle", "graphic": "/props/cars/car_blue", "position": [123, 195], "rotation": 271.0, "shapeCollision": [16.9, 43.55], "shape": [22.75, 46.8]},
