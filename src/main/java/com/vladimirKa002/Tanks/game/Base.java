@@ -13,7 +13,7 @@ public class Base extends StaticCircleObject {
     private static final int RADIUS = 50;
 
     public Base(double[] position, Game game) {
-        super(position, 0, COLLISION_RADIUS, RADIUS, null, "base");
+        super(position, 0, COLLISION_RADIUS, RADIUS, null);
         this.game = game;
     }
 

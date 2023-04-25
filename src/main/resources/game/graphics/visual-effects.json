@@ -1,6 +1,6 @@
 {
-  "hit": {"shape":  [0.3, 0.3]},
-  "tank-explosion": {"shape":  [1, 1]},
-  "gun_shot": {"shape":  [0.3, 0.566]},
+  "hit": {"shape":  [19.5, 19.5]},
+  "tank-explosion": {"shape":  [65, 65]},
+  "gun_shot": {"shape":  [19.5, 36.79]},
   "damage": {"shape":  "full"}
 }

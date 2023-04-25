@@ -92,13 +92,12 @@ public class GameResources {
                         radiusCollision = objects.optDouble("radiusCollision", radius);
                     }
 
-                    String name = objects.getString("name");
                     String _type = objects.getString("type");
                     double rotation = objects.optDouble("rotation", rnd.nextInt(360));
                     if (_type.equals("circle"))
-                        obstacles.add(new StaticCircleObject(position, rotation, radiusCollision, radius, graphic, name));
+                        obstacles.add(new StaticCircleObject(position, rotation, radiusCollision, radius, graphic));
                     else if (_type.equals("rectangle"))
-                        obstacles.add(new StaticRectangleObject(position, rotation, shapeCollision, shape, graphic, name));
+                        obstacles.add(new StaticRectangleObject(position, rotation, shapeCollision, shape, graphic));
                     graphics.add(graphic);
                 }
 

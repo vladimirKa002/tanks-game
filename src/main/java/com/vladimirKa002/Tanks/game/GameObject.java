@@ -3,8 +3,6 @@ package com.vladimirKa002.Tanks.game;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public abstract class GameObject {
-    protected static final double sizeMultiplier = 65;
-
     protected static final AtomicInteger counter = new AtomicInteger(0);
     public final int id;
 

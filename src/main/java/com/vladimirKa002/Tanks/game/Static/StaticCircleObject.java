@@ -7,20 +7,17 @@ import java.util.Arrays;
 public class StaticCircleObject extends CircleObject implements Static{
     private final double radius; // Image radius (can be slightly larger than collision size)
     protected final String graphics;
-    private final String name;
 
     public StaticCircleObject(double[] position, double rotation, double collisionRadius,
-                              double radius, String graphics, String name) {
+                              double radius, String graphics) {
         super(position, rotation, collisionRadius);
         this.radius = radius;
         this.graphics = graphics;
-        this.name = name;
     }
 
     @Override
     public String toString() {
         return "{" +
-                "\"name\": \"" + name + "\", " +
                 "\"type\": \"circle\", " +
                 "\"graphics\": \"" + graphics + "\", " +
                 "\"position\": " + Arrays.toString(position) + ", " +

@@ -7,20 +7,17 @@ import java.util.Arrays;
 public class StaticRectangleObject extends RectangleObject implements Static{
     private final double[] shape; // Image size (can be slightly larger than collision size)
     protected final String graphics;
-    private final String name;
 
     public StaticRectangleObject(double[] position, double rotation, double[] collisionShape,
-                                 double[] shape, String graphics, String name) {
+                                 double[] shape, String graphics) {
         super(position, rotation, collisionShape);
         this.shape = shape;
         this.graphics = graphics;
-        this.name = name;
     }
 
     @Override
     public String toString() {
         return "{" +
-                "\"name\": \"" + name + "\", " +
                 "\"type\": \"rectangle\", " +
                 "\"graphics\": \"" + graphics + "\", " +
                 "\"position\": " + Arrays.toString(position) + ", " +

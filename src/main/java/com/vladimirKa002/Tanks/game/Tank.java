@@ -11,11 +11,11 @@ import java.util.List;
 public class Tank extends RectangleObject{
     private int health = 100;
 
-    private static final double[] bodyShape = {0.499 * sizeMultiplier, 1 * sizeMultiplier};
-    private static final double[] headShape = {0.499 * sizeMultiplier, 1.143 * sizeMultiplier};
+    private static final double[] bodyShape = {32.435, 65};
+    private static final double[] headShape = {32.435, 74.295};
 
-    private static final double[] headPosition = {0 * sizeMultiplier, -0.303 * sizeMultiplier};
-    private static final double[] headRotationPos = {0 * sizeMultiplier, 0 * sizeMultiplier};
+    private static final double[] headPosition = {0, -19.695};
+    private static final double[] headRotationPos = {0, 0};
 
     private static final double FORWARD_MOVE = 1; // Forward move speed
     private static final double BACKWARD_MOVE = -0.75; // Backward move speed
@@ -179,7 +179,7 @@ public class Tank extends RectangleObject{
         double angle = rotation + head_rotation;
         double[] shotPosition = position.clone();
 
-        double pos = headPosition[1] - headShape[1] / 2 - 0.25 * sizeMultiplier;
+        double pos = headPosition[1] - headShape[1] / 2 - 16.25;
 
         double x_dir = Math.sin(-Math.toRadians(angle));
         double y_dir = Math.cos(-Math.toRadians(angle));

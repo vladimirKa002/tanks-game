@@ -11,7 +11,7 @@ public class Projectile extends RectangleObject {
     private static final double SPEED = 40;
     private static final int DAMAGE_MIN = 15; // Minimal damage
 
-    private static final double[] shape = {0.04 * sizeMultiplier, 0.1 * sizeMultiplier};
+    private static final double[] shape = {2.6, 6.5};
 
     private final double[] initPos;
 

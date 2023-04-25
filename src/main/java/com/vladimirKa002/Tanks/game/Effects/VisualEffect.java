@@ -19,7 +19,7 @@ public class VisualEffect extends Effect {
 
         this.duration = info.getDuration();
         if (info.shape[0] == Double.MAX_VALUE) this.shape = new double[]{1000, 1000};
-        else this.shape = new double[]{info.shape[0] * sizeMultiplier, info.shape[1] * sizeMultiplier};
+        else this.shape = new double[]{info.shape[0], info.shape[1]};
     }
 
     public boolean isActive() {
