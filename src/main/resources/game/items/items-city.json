@@ -1,0 +1,13 @@
+{
+  "building1": {"type": "rectangle", "graphics": "props/buildings/building1", "shape": [112, 91]},
+  "building2": {"type": "rectangle", "graphics": "props/buildings/building2", "shape": [114.5, 112.5]},
+  "building3": {"type": "rectangle", "graphics": "props/buildings/building3", "shape": [114, 113]},
+  "building4": {"type": "rectangle", "graphics": "props/buildings/building4", "shape": [59.5, 130]},
+  "building5": {"type": "rectangle", "graphics": "props/buildings/building5", "shape": [48.5, 89]},
+
+  "car_blue": {"type": "rectangle", "graphics": "/props/cars/car_blue", "shapeCollision": [16.9, 43.55], "shape": [22.75, 46.8]},
+  "car_red": {"type": "rectangle", "graphics": "/props/cars/car_red", "shapeCollision": [16.9, 43.55], "shape": [22.75, 46.8]},
+  "car_white": {"type": "rectangle", "graphics": "/props/cars/car_white", "shapeCollision": [16.9, 43.55], "shape": [22.75, 46.8]},
+  "car_grey": {"type": "rectangle", "graphics": "/props/cars/car_grey", "shapeCollision": [16.9, 43.55], "shape": [22.75, 46.8]},
+  "car_black": {"type": "rectangle", "graphics": "/props/cars/car_black", "shapeCollision": [16.9, 43.55], "shape": [22.75, 46.8]}
+}

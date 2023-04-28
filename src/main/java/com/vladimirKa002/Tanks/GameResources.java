@@ -126,7 +126,8 @@ public class GameResources {
                 basePosition = new double[]{jsonArray.getDouble(0), jsonArray.getDouble(1)};
 
                 backSoundName = data.getString("back-sound");
-            } catch (JSONException e) {
+            }
+            catch (JSONException e) {
                 e.printStackTrace();
                 basePosition = new double[]{(double) units / 2, (double) units / 2};
             }

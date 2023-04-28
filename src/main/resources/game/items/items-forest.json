@@ -1,0 +1,4 @@
+{
+  "green-tree": {"type": "circle", "graphics": "props/green-tree", "radius": 19.5, "radiusCollision": 16.25},
+  "hut": {"type": "rectangle", "graphics": "props/buildings/hut", "shapeCollision": [52, 58], "shape":  [58, 65]}
+}

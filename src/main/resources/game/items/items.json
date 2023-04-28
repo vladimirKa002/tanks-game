@@ -1,0 +1,4 @@
+{
+  "desert-rock": {"radius": 12, "type": "circle", "graphics": "props/desert-rock"},
+  "green-tree": {"type": "circle", "graphics": "props/green-tree", "radius": 19.5, "radiusCollision": 16.25}
+}
