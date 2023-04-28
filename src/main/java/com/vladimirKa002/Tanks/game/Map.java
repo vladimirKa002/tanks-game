@@ -1,5 +1,7 @@
 package com.vladimirKa002.Tanks.game;
 
+import com.vladimirKa002.Tanks.GameResources.TankPosition;
+
 import java.awt.geom.Area;
 import java.util.*;
 
@@ -21,7 +23,7 @@ public class Map {
     private final String mapString;
     private final String obstaclesString;
 
-    public final List<List<double[]>> tanksPositions_teams;
+    public final List<List<TankPosition>> tanksPositions_teams;
 
     public Map(
             int units,
@@ -30,7 +32,7 @@ public class Map {
             String size,
             HashSet<String> graphics,
             ArrayList<CollisionObject> obstacles,
-            List<List<double[]>> tanksPositions_teams,
+            List<List<TankPosition>> tanksPositions_teams,
             Area area,
             double[] basePosition,
             String backSoundName){
@@ -52,17 +54,15 @@ public class Map {
         obstaclesString = "{ \"obstacles\": " + obstacles + "}";
     }
 
-    public List<double[]> getTanksPositions_teamOne() {
-        List<double[]> newList = new ArrayList<>(3);
-        for (double[] ds : tanksPositions_teams.get(0))
-            newList.add(ds.clone());
+    public List<TankPosition> getTanksPositions_teamOne() {
+        List<TankPosition> newList = new ArrayList<>(3);
+        newList.addAll(tanksPositions_teams.get(0));
         return newList;
     }
 
-    public List<double[]> getTanksPositions_teamTwo() {
-        List<double[]> newList = new ArrayList<>(3);
-        for (double[] ds : tanksPositions_teams.get(1))
-            newList.add(ds.clone());
+    public List<TankPosition> getTanksPositions_teamTwo() {
+        List<TankPosition> newList = new ArrayList<>(3);
+        newList.addAll(tanksPositions_teams.get(1));
         return newList;
     }
 

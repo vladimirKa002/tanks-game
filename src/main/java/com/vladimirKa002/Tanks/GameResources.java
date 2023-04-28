@@ -50,7 +50,7 @@ public class GameResources {
         for (String mapName: MAPS){
             HashSet<String> graphics = new HashSet<>(10);
             ArrayList<CollisionObject> obstacles = new ArrayList<>(50);
-            List<List<double[]>> tanksPositions_teams = new ArrayList<>(2);
+            List<List<TankPosition>> tanksPositions_teams = new ArrayList<>(2);
             Area area = new Area();
             String backSoundName = null;
             double[] basePosition;
@@ -69,7 +69,7 @@ public class GameResources {
                     if (objects.has("active")) {
                         continue;
                     }
-                    String graphic = objects.getString("graphic");
+                    String graphic = objects.getString("graphics");
 
                     JSONArray jsonArray = (JSONArray) objects.get("position");
                     double[] position = new double[]{jsonArray.getDouble(0), jsonArray.getDouble(1)};
@@ -104,20 +104,20 @@ public class GameResources {
                 JSONObject tanksPos = data.getJSONObject("tanks-pos");
                 for (int i = 1; i <= 2; i++){
                     JSONArray team1 = tanksPos.getJSONArray("team" + i);
-                    List<double[]> positions = new ArrayList<>(2);
+                    List<TankPosition> tankPositions = new ArrayList<>(3);
                     for(int j = 0; j < team1.length(); j++) {
                         JSONObject objects = team1.getJSONObject(j);
                         JSONArray jsonArray = (JSONArray) objects.get("position");
                         double[] position = new double[]{jsonArray.getDouble(0), jsonArray.getDouble(1)};
-                        // double rotation = objects.optDouble("rotation", 0);
-                        positions.add(position);
+                        double rotation = objects.optDouble("rotation", 0);
+                        tankPositions.add(new TankPosition(position, rotation));
                     }
-                    tanksPositions_teams.add(positions);
+                    tanksPositions_teams.add(tankPositions);
                 }
 
-                JSONArray playersAmountJSON = data.getJSONArray("players");
-                playersAmount[0] = playersAmountJSON.getInt(0);
-                playersAmount[1] = playersAmountJSON.getInt(1);
+                int players = data.getInt("players");
+                playersAmount[0] = players;
+                playersAmount[1] = players;
 
                 size = data.getString("size").toLowerCase();
                 units = data.optInt("units", units);
@@ -222,6 +222,29 @@ public class GameResources {
             return FileCopyUtils.copyToString(reader);
         } catch (IOException e) {
             throw new UncheckedIOException(e);
+        }
+    }
+
+
+    ///////////////////////////////////////////////////////////////////////////////////
+    // Data classes
+    ///////////////////////////////////////////////////////////////////////////////////
+
+    public static class TankPosition{
+        private final double[] position;
+        private final double rotation;
+
+        public TankPosition(double[] position, double rotation) {
+            this.position = position;
+            this.rotation = rotation;
+        }
+
+        public double[] getPosition() {
+            return position.clone();
+        }
+
+        public double getRotation() {
+            return rotation;
         }
     }
 }

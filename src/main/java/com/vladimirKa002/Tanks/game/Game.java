@@ -1,6 +1,7 @@
 package com.vladimirKa002.Tanks.game;
 
 import com.vladimirKa002.Tanks.GameResources;
+import com.vladimirKa002.Tanks.GameResources.TankPosition;
 import com.vladimirKa002.Tanks.PageController;
 import com.vladimirKa002.Tanks.TanksApplication;
 import com.vladimirKa002.Tanks.game.Effects.AudioEffect;
@@ -53,7 +54,7 @@ public class Game implements Runnable{
         teams.put(team1, new ArrayList<>(playersNum / 2));
         teams.put(team2, new ArrayList<>(playersNum / 2));
 
-        HashMap<String, List<double[]>> tanksPositions = new HashMap<>();
+        HashMap<String, List<TankPosition>> tanksPositions = new HashMap<>();
         tanksPositions.put(team1, map.getTanksPositions_teamOne());
         tanksPositions.put(team2, map.getTanksPositions_teamTwo());
 
@@ -65,8 +66,9 @@ public class Game implements Runnable{
 
         for (int i = 0; i < playersNum; i++) {
             String tName = teamsN.remove(rnd.nextInt(teamsN.size()));
-            tanks[i] = new Tank(tanksPositions.get(tName).remove(
-                    rnd.nextInt(tanksPositions.get(tName).size())), tName, this);
+            TankPosition tankPosition = tanksPositions.get(tName).remove(
+                    rnd.nextInt(tanksPositions.get(tName).size()));
+            tanks[i] = new Tank(tankPosition.getPosition(), tankPosition.getRotation(), tName, this);
             teams.get(tName).add(tanks[i]);
         }
 

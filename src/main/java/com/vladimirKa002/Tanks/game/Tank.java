@@ -40,8 +40,8 @@ public class Tank extends RectangleObject{
 
     private final String team;
 
-    public Tank(double[] position, String team, Game game){
-        super(position, (position[1] < (double) game.getMap().getUnits() / 2 ? 180 : 0), bodyShape);
+    public Tank(double[] position, double rotation, String team, Game game){
+        super(position, rotation, bodyShape);
 
         switch (game.getMap().getName()) {
             case "forest":

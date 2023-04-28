@@ -2,9 +2,9 @@
   "size": "small",
   "tanks-pos": {
     "team1": [
-      {"position": [50, 50]},
-      {"position": [250, 50]},
-      {"position": [450, 50]}
+      {"position": [50, 50], "rotation": 180},
+      {"position": [250, 50], "rotation": 180},
+      {"position": [450, 50], "rotation": 180}
     ],
     "team2": [
       {"position": [50, 450]},
@@ -12,52 +12,52 @@
       {"position": [450, 450]}
     ]
   },
-  "players": [1, 1],
+  "players": 1,
 
   "obstacles" :[
-    {"position": [412.0, 125.0], "rotation": 75.0, "radius": 19.5, "type": "circle", "graphic": "props/desert-rock"},
-    {"position": [354, 204], "rotation": 75.0, "radius": 19.5, "type": "circle", "graphic": "props/desert-rock"},
-    {"position": [341, 224], "rotation": 75.0, "radius": 14, "type": "circle", "graphic": "props/desert-rock"},
-    {"position": [473, 173], "rotation": 195, "radius": 7, "type": "circle", "graphic": "props/desert-rock"},
-    {"position": [389, 352], "rotation": 290, "radius": 25, "type": "circle", "graphic": "props/desert-rock"},
+    {"position": [412.0, 125.0], "rotation": 75.0, "radius": 19.5, "type": "circle", "graphics": "props/desert-rock"},
+    {"position": [354, 204], "rotation": 75.0, "radius": 19.5, "type": "circle", "graphics": "props/desert-rock"},
+    {"position": [341, 224], "rotation": 75.0, "radius": 14, "type": "circle", "graphics": "props/desert-rock"},
+    {"position": [473, 173], "rotation": 195, "radius": 7, "type": "circle", "graphics": "props/desert-rock"},
+    {"position": [389, 352], "rotation": 290, "radius": 25, "type": "circle", "graphics": "props/desert-rock"},
 
-    {"position": [321, 392], "rotation": 75.0, "radius": 19.5, "type": "circle", "graphic": "props/desert-rock"},
-    {"position": [337, 402], "rotation": 275.0, "radius": 9, "type": "circle", "graphic": "props/desert-rock"},
-    {"position": [5, 162], "rotation": 90, "radius": 40, "type": "circle", "graphic": "props/desert-rock"},
+    {"position": [321, 392], "rotation": 75.0, "radius": 19.5, "type": "circle", "graphics": "props/desert-rock"},
+    {"position": [337, 402], "rotation": 275.0, "radius": 9, "type": "circle", "graphics": "props/desert-rock"},
+    {"position": [5, 162], "rotation": 90, "radius": 40, "type": "circle", "graphics": "props/desert-rock"},
 
-    {"position": [264, 396], "rotation": 75.0, "radius": 5, "type": "circle", "graphic": "props/desert-rock"},
-    {"position": [192, 234], "rotation": 96.0, "radius": 6, "type": "circle", "graphic": "props/desert-rock"},
-    {"position": [23, 308], "rotation": 2.0, "radius": 7, "type": "circle", "graphic": "props/desert-rock"},
-    {"position": [132, 447], "rotation": 290.0, "radius": 6, "type": "circle", "graphic": "props/desert-rock"},
-    {"position": [167, 369], "rotation": 325.0, "radius": 5, "type": "circle", "graphic": "props/desert-rock"},
-    {"position": [122, 355], "rotation": 47.0, "radius": 5, "type": "circle", "graphic": "props/desert-rock"},
-    {"position": [159, 308], "rotation": 300.0, "radius": 10, "type": "circle", "graphic": "props/desert-rock"},
+    {"position": [264, 396], "rotation": 75.0, "radius": 5, "type": "circle", "graphics": "props/desert-rock"},
+    {"position": [192, 234], "rotation": 96.0, "radius": 6, "type": "circle", "graphics": "props/desert-rock"},
+    {"position": [23, 308], "rotation": 2.0, "radius": 7, "type": "circle", "graphics": "props/desert-rock"},
+    {"position": [132, 447], "rotation": 290.0, "radius": 6, "type": "circle", "graphics": "props/desert-rock"},
+    {"position": [167, 369], "rotation": 325.0, "radius": 5, "type": "circle", "graphics": "props/desert-rock"},
+    {"position": [122, 355], "rotation": 47.0, "radius": 5, "type": "circle", "graphics": "props/desert-rock"},
+    {"position": [159, 308], "rotation": 300.0, "radius": 10, "type": "circle", "graphics": "props/desert-rock"},
 
-    {"position": [170, 190], "rotation": 156.0, "radius": 25, "type": "circle", "graphic": "props/desert-rock"},
-    {"position": [194, 180], "rotation": 90.0, "radius": 18, "type": "circle", "graphic": "props/desert-rock"},
-    {"position": [198, 238], "rotation": 71.0, "radius": 21, "type": "circle", "graphic": "props/desert-rock"},
-    {"position": [176, 258], "rotation": 351.0, "radius": 23, "type": "circle", "graphic": "props/desert-rock"},
+    {"position": [170, 190], "rotation": 156.0, "radius": 25, "type": "circle", "graphics": "props/desert-rock"},
+    {"position": [194, 180], "rotation": 90.0, "radius": 18, "type": "circle", "graphics": "props/desert-rock"},
+    {"position": [198, 238], "rotation": 71.0, "radius": 21, "type": "circle", "graphics": "props/desert-rock"},
+    {"position": [176, 258], "rotation": 351.0, "radius": 23, "type": "circle", "graphics": "props/desert-rock"},
 
-    {"position": [179, 151], "rotation": 351.0, "radius": 23, "type": "circle", "graphic": "props/desert-rock"},
-    {"position": [196, 283], "rotation": 14.0, "radius": 23, "type": "circle", "graphic": "props/desert-rock"},
+    {"position": [179, 151], "rotation": 351.0, "radius": 23, "type": "circle", "graphics": "props/desert-rock"},
+    {"position": [196, 283], "rotation": 14.0, "radius": 23, "type": "circle", "graphics": "props/desert-rock"},
 
-    {"position": [351, 477], "rotation": 106.0, "radius": 5, "type": "circle", "graphic": "props/desert-rock"},
-    {"position": [273, 488], "rotation": 98.0, "radius": 4, "type": "circle", "graphic": "props/desert-rock"},
-    {"position": [319, 15], "rotation": 230.0, "radius": 6, "type": "circle", "graphic": "props/desert-rock"},
-    {"position": [208, 17], "rotation": 4.0, "radius": 4, "type": "circle", "graphic": "props/desert-rock"},
-    {"position": [187, 48], "rotation": 0.0, "radius": 7, "type": "circle", "graphic": "props/desert-rock"},
-    {"position": [50, 185], "rotation": 93.0, "radius": 6, "type": "circle", "graphic": "props/desert-rock"},
-    {"position": [74, 249], "rotation": 270.0, "radius": 5, "type": "circle", "graphic": "props/desert-rock"},
+    {"position": [351, 477], "rotation": 106.0, "radius": 5, "type": "circle", "graphics": "props/desert-rock"},
+    {"position": [273, 488], "rotation": 98.0, "radius": 4, "type": "circle", "graphics": "props/desert-rock"},
+    {"position": [319, 15], "rotation": 230.0, "radius": 6, "type": "circle", "graphics": "props/desert-rock"},
+    {"position": [208, 17], "rotation": 4.0, "radius": 4, "type": "circle", "graphics": "props/desert-rock"},
+    {"position": [187, 48], "rotation": 0.0, "radius": 7, "type": "circle", "graphics": "props/desert-rock"},
+    {"position": [50, 185], "rotation": 93.0, "radius": 6, "type": "circle", "graphics": "props/desert-rock"},
+    {"position": [74, 249], "rotation": 270.0, "radius": 5, "type": "circle", "graphics": "props/desert-rock"},
 
-    {"position": [277, 249], "rotation": 10.0, "radius": 6, "type": "circle", "graphic": "props/desert-rock"},
-    {"position": [15, 385], "rotation": 198.0, "radius": 30, "type": "circle", "graphic": "props/desert-rock"},
-    {"position": [495, 303], "rotation": 270.0, "radius": 4, "type": "circle", "graphic": "props/desert-rock"},
-    {"position": [482, 291], "rotation": 96.0, "radius": 5, "type": "circle", "graphic": "props/desert-rock"},
+    {"position": [277, 249], "rotation": 10.0, "radius": 6, "type": "circle", "graphics": "props/desert-rock"},
+    {"position": [15, 385], "rotation": 198.0, "radius": 30, "type": "circle", "graphics": "props/desert-rock"},
+    {"position": [495, 303], "rotation": 270.0, "radius": 4, "type": "circle", "graphics": "props/desert-rock"},
+    {"position": [482, 291], "rotation": 96.0, "radius": 5, "type": "circle", "graphics": "props/desert-rock"},
 
-    {"position": [109, 41], "rotation": 290.0, "radius": 6, "type": "circle", "graphic": "props/desert-rock"},
-    {"position": [118, 56], "rotation": 51.0, "radius": 7, "type": "circle", "graphic": "props/desert-rock"},
-    {"position": [263, 118], "rotation": 240.0, "radius": 10, "type": "circle", "graphic": "props/desert-rock"},
-    {"position": [6, 12], "rotation": 103.0, "radius": 12, "type": "circle", "graphic": "props/desert-rock"}
+    {"position": [109, 41], "rotation": 290.0, "radius": 6, "type": "circle", "graphics": "props/desert-rock"},
+    {"position": [118, 56], "rotation": 51.0, "radius": 7, "type": "circle", "graphics": "props/desert-rock"},
+    {"position": [263, 118], "rotation": 240.0, "radius": 10, "type": "circle", "graphics": "props/desert-rock"},
+    {"position": [6, 12], "rotation": 103.0, "radius": 12, "type": "circle", "graphics": "props/desert-rock"}
 
   ],
   "units": 500,
