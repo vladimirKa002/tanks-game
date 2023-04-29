@@ -54,9 +54,7 @@ public class GameResources {
             Area area = new Area();
             String backSoundName = null;
             double[] basePosition;
-            int[] playersAmount = new int[2];
-            int units = Map.DEFAULT_UNITS;
-            Map.MapSize size = null;
+            Map.MapSize size = Map.MapSize.SMALL;
 
             ResourceLoader resourceLoader = new DefaultResourceLoader();
             Resource resource = resourceLoader.getResource("classpath:game/maps/" + mapName + ".json");
@@ -115,12 +113,7 @@ public class GameResources {
                     tanksPositions_teams.add(tankPositions);
                 }
 
-                int players = data.getInt("players");
-                playersAmount[0] = players;
-                playersAmount[1] = players;
-
                 size = Map.MapSize.valueOf(data.getString("size").toUpperCase());
-                units = data.optInt("units", units);
 
                 JSONArray jsonArray = data.getJSONArray("base");
                 basePosition = new double[]{jsonArray.getDouble(0), jsonArray.getDouble(1)};
@@ -129,7 +122,7 @@ public class GameResources {
             }
             catch (JSONException e) {
                 e.printStackTrace();
-                basePosition = new double[]{(double) units / 2, (double) units / 2};
+                basePosition = new double[]{(double) size.getUnits() / 2, (double) size.getUnits() / 2};
             }
 
             for (CollisionObject obstacle : obstacles) {
@@ -137,8 +130,6 @@ public class GameResources {
             }
 
             Map map = new Map(
-                    units,
-                    playersAmount,
                     mapName,
                     size,
                     graphics,

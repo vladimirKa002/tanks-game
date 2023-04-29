@@ -12,7 +12,6 @@
       {"position": [450, 450]}
     ]
   },
-  "players": 1,
 
   "obstacles" :[{"type": "circle", "graphics": "props/green-tree", "position": [412.0, 125.0], "radius": 19.5, "radiusCollision": 16.25},
 {"type": "circle", "graphics": "props/green-tree", "position": [478.0, 338.0], "radius": 19.5, "radiusCollision": 16.25},
@@ -63,7 +62,6 @@
 {"type": "circle", "graphics": "props/green-tree", "position": [436.0, 155.0], "radius": 19.5, "radiusCollision": 16.25},
 {"type": "circle", "graphics": "props/green-tree", "position": [20, 388], "radius": 19.5, "radiusCollision": 16.25},
 {"type": "circle", "graphics": "props/green-tree", "position": [23, 202], "radius": 19.5, "radiusCollision": 16.25}],
-  "units": 500,
   "base": [252, 250],
   "back-sound": "forest"
 }

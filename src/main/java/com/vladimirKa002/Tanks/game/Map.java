@@ -26,8 +26,6 @@ public class Map {
     public final List<List<TankPosition>> tanksPositions_teams;
 
     public Map(
-            int units,
-            int[] playersAmount,
             String name,
             MapSize size,
             HashSet<String> graphics,
@@ -36,8 +34,8 @@ public class Map {
             Area area,
             double[] basePosition,
             String backSoundName){
-        this.units = units;
-        this.playersAmount = playersAmount;
+        this.units = size.units;
+        this.playersAmount = new int[]{size.players, size.players};
         this.name = name;
         this.size = size;
         this.graphics = graphics;
@@ -114,8 +112,21 @@ public class Map {
     }
 
     public enum MapSize{
-        SMALL,
-        MEDIUM,
-        LARGE
+        SMALL(500, 1),
+        MEDIUM(600, 3),
+        LARGE(750, 5);
+
+        private final int units;
+        private final int players;
+        MapSize(int units, int players) {
+            this.units = units;
+            this.players = players;
+        }
+
+        public int getUnits() {
+            return units;
+        }
+
+        public int getPlayers() { return players; }
     }
 }

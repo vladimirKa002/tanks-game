@@ -12,7 +12,6 @@
       {"position": [450, 450]}
     ]
   },
-  "players": 1,
 
   "obstacles" :[
     {"position": [412.0, 125.0], "rotation": 75.0, "radius": 19.5, "type": "circle", "graphics": "props/desert-rock"},
@@ -60,7 +59,6 @@
     {"position": [6, 12], "rotation": 103.0, "radius": 12, "type": "circle", "graphics": "props/desert-rock"}
 
   ],
-  "units": 500,
   "base": [400, 250],
   "back-sound": "wind"
 }
