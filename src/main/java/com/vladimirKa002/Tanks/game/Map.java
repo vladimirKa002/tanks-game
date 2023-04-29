@@ -12,7 +12,7 @@ public class Map {
     private final int units;
     private final int[] playersAmount;
     private final String name;
-    private final String size;
+    private final MapSize size;
     private final HashSet<String> graphics;
     private final ArrayList<CollisionObject> obstacles;
     private final Area area;
@@ -29,7 +29,7 @@ public class Map {
             int units,
             int[] playersAmount,
             String name,
-            String size,
+            MapSize size,
             HashSet<String> graphics,
             ArrayList<CollisionObject> obstacles,
             List<List<TankPosition>> tanksPositions_teams,
@@ -76,7 +76,7 @@ public class Map {
         return name;
     }
 
-    public String getSize(){
+    public MapSize getSize(){
         return size;
     }
 
@@ -111,5 +111,11 @@ public class Map {
 
     public double[] getBasePosition() {
         return basePosition;
+    }
+
+    public enum MapSize{
+        SMALL,
+        MEDIUM,
+        LARGE
     }
 }

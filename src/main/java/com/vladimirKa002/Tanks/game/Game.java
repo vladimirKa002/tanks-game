@@ -32,7 +32,7 @@ public class Game implements Runnable{
      *
      * @param size    size of the map
      */
-    public Game(String size) {
+    public Game(Map.MapSize size) {
         id = TanksApplication.getId();
         games.put(id, this);
         map = GameResources.getInstance().getRandomMap(size);

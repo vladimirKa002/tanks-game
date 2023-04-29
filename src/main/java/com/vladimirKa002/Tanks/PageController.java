@@ -2,6 +2,7 @@ package com.vladimirKa002.Tanks;
 
 import com.vladimirKa002.Tanks.game.Game;
 
+import com.vladimirKa002.Tanks.game.Map;
 import com.vladimirKa002.Tanks.game.Tank;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.DefaultResourceLoader;
@@ -119,8 +120,10 @@ public class PageController {
                                        @RequestParam("game_mode") String game_mode_param) {
         String session_id = session_id_param.orElseGet(TanksApplication::getId);
 
+        Map.MapSize mapSize = Map.MapSize.valueOf(game_mode_param);
+
         if (true) {
-            Game game = new Game(game_mode_param);
+            Game game = new Game(mapSize);
             game.setTankUser(session_id);
             game.startGame();
             return ResponseEntity.ok(new ResponseSession(session_id, game.id, false, 0, 0));
@@ -143,7 +146,7 @@ public class PageController {
                 return ResponseEntity.ok(new ResponseSession(session_id, value.id, true, num, playerNum));
             }
         }
-        Game game = new Game(game_mode_param);
+        Game game = new Game(mapSize);
         int playerNum = game.getTanksAmount();
         game.setTankUser(session_id);
         return ResponseEntity.ok(new ResponseSession(session_id, game.id, true, 1, playerNum));

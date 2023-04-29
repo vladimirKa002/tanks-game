@@ -26,7 +26,7 @@ public class GameResources {
     private static final Random rnd = new Random();
     private static GameResources gameResources;
 
-    private final HashMap<String, List<Map>> maps = new HashMap<>();
+    private final HashMap<Map.MapSize, List<Map>> maps = new HashMap<>();
     private final HashMap<String, VisualEffect.VisualEffectInfo> visualEffects = new HashMap<>();
 
     private GameResources(){
@@ -56,7 +56,7 @@ public class GameResources {
             double[] basePosition;
             int[] playersAmount = new int[2];
             int units = Map.DEFAULT_UNITS;
-            String size = null;
+            Map.MapSize size = null;
 
             ResourceLoader resourceLoader = new DefaultResourceLoader();
             Resource resource = resourceLoader.getResource("classpath:game/maps/" + mapName + ".json");
@@ -119,7 +119,7 @@ public class GameResources {
                 playersAmount[0] = players;
                 playersAmount[1] = players;
 
-                size = data.getString("size").toLowerCase();
+                size = Map.MapSize.valueOf(data.getString("size").toUpperCase());
                 units = data.optInt("units", units);
 
                 JSONArray jsonArray = data.getJSONArray("base");
@@ -169,8 +169,7 @@ public class GameResources {
         return randomGraphics;
     }
 
-    public Map getRandomMap(String size){
-        size = size.toLowerCase();
+    public Map getRandomMap(Map.MapSize size){
         return maps.get(size).get(rnd.nextInt(MAPS.length));
     }
 
