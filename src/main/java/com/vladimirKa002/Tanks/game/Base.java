@@ -9,15 +9,14 @@ import java.util.HashSet;
 
 public class Base extends StaticCircleObject {
     private final Game game;
-    private static final int COLLISION_RADIUS = 35;
-    private static final int RADIUS = 50;
+    private final BaseConfig baseConfig;
 
-    public Base(double[] position, Game game) {
-        super(position, 0, COLLISION_RADIUS, RADIUS, null);
+    public Base(double[] position, BaseConfig baseConfig, Game game) {
+        super(position, 0, baseConfig.collisionRadius, baseConfig.radius, null);
+        this.baseConfig = baseConfig;
         this.game = game;
     }
 
-    private static final int MAX_SCORE = 10;
     private static final double SCORE_PUNISHMENT = 2.5;
     private static final double MANY_TANKS = 1.75;
     private static final double SCORE_PER_TICK = 0.016667;
@@ -46,6 +45,8 @@ public class Base extends StaticCircleObject {
 
         double score = 0;
         double addScore = SCORE_PER_TICK;
+        // So, total amount of scores added if many tanks on the base is SCORE_PER_TICK * MANY_TANKS
+        //   TODO : check
         if (tanksContribution.keySet().size() >= 2)
             addScore = SCORE_PER_TICK * MANY_TANKS / tanksContribution.keySet().size();
         for (Tank tank: tanksContribution.keySet()) {
@@ -92,6 +93,7 @@ public class Base extends StaticCircleObject {
                 (team != null && !tank1.getTeam().equals(team))) return;
         for (Tank tank : tanksContribution.keySet()) {
             double p = tanksContribution.get(tank);
+            // TODO : check score punishment
             if (score == 0) p = 0;
             else p = p - SCORE_PUNISHMENT * p / score;
             if (p < 0) p = 0;
@@ -101,11 +103,11 @@ public class Base extends StaticCircleObject {
 
     @Override
     public String toString() {
-        int progress = (int) (score / MAX_SCORE * 100);
+        int progress = (int) (score / baseConfig.getScore() * 100);
         return "{" +
                 "\"progress\": " + (Math.min(progress, 100))  +
                 ", \"position\": " + Arrays.toString(position) +
-                ", \"radius\": " + RADIUS +
+                ", \"radius\": " + baseConfig.radius +
                 ", \"team\": \"" + team + "\"" +
                 '}';
     }
@@ -115,9 +117,36 @@ public class Base extends StaticCircleObject {
     }
 
     public String getCaptorWinner() {
-        if (score >= MAX_SCORE) {
+        if (score >= baseConfig.getScore()) {
             return team;
         }
         return null;
+    }
+
+    public enum BaseConfig{
+        SMALL(50, 10),
+        MEDIUM(60, 20),
+        LARGE(75, 30);
+
+        private final double radius;
+        private final double collisionRadius;
+        private final int score;
+        private static final double COLLISION_RADIUS_MULTIPLIER = 0.7;
+
+        BaseConfig(double radius, int score) {
+            this.radius = radius;
+            this.collisionRadius = radius * COLLISION_RADIUS_MULTIPLIER;
+            this.score = score;
+        }
+
+        public double getRadius() {
+            return radius;
+        }
+
+        public double getCollisionRadius() {
+            return collisionRadius;
+        }
+
+        public int getScore() { return score; }
     }
 }

@@ -38,7 +38,7 @@ public class Game implements Runnable{
         map = GameResources.getInstance().getRandomMap(size);
         int playersNum = map.getPlayersAmount();
 
-        base = new Base(map.getBasePosition(), this);
+        base = new Base(map.getBasePosition(), Base.BaseConfig.valueOf(size.name().toUpperCase()), this);
 
         tanks = new Tank[playersNum];
 

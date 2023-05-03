@@ -120,7 +120,7 @@ public class PageController {
                                        @RequestParam("game_mode") String game_mode_param) {
         String session_id = session_id_param.orElseGet(TanksApplication::getId);
 
-        Map.MapSize mapSize = Map.MapSize.valueOf(game_mode_param);
+        Map.MapSize mapSize = Map.MapSize.valueOf(game_mode_param.toUpperCase());
 
         if (true) {
             Game game = new Game(mapSize);
