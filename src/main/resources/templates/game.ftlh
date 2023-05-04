@@ -2,9 +2,12 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Tanks. Fight!</title>
+    <title>Танки. В бой!</title>
     <link rel="icon" type="image/png" href="/favicon.png"/>
-    <link href="./styles/controls.css" rel="stylesheet">
+    <link href="./styles/blocks.css" rel="stylesheet">
+    <link href="./styles/input_buttons.css" rel="stylesheet">
+    <link href="./styles/texts.css" rel="stylesheet">
+    <link href="./styles/circles.css" rel="stylesheet">
     <script src="/webjars/jquery/jquery.min.js"></script>
     <script src="/webjars/sockjs-client/sockjs.min.js"></script>
     <script src="/webjars/stomp-websocket/stomp.min.js"></script>
@@ -12,30 +15,51 @@
 </head>
 <body>
 <div class="block center">
-    <div class="tools left">
-        <img style="width:216px;height:88px;margin-top:20px;" src="/graphics/logo.png" alt="Logo">
-        <br>
-        <form action="/main">
-            <input class="input_button" type="submit" value="Меню"/>
-        </form>
+    <div class="tools">
+        <div class="center_block">
+            <div class="title_text_small">Справка</div>
+        </div>
+        <div class="space"></div>
+        <div class="title_text_small">Цель</div>
+        <div class="space"></div>
+        <div class="text">Уничтожьте всю технику противника или захватите базу</div>
+        <div class="space"></div>
+        <div class="space"></div>
+        <div class="title_text_small">Управление</div>
+        <div class="space"></div>
+        <div class="text">Вперед - ⬆️ или 'w'</div>
+        <div class="text">Назад - ⬇️ или 's'</div>
+        <div class="text">Влево - ⬅️ или 'a'</div>
+        <div class="text">Вправо - ➡️ или 'd'</div>
+        <div class="text">Стрельба - 🖱</div>
+        <div class="space"></div>
+        <div class="center_block">
+            <form action="/main">
+                <input class="input_button" type="submit" value="Меню"/>
+            </form>
+        </div>
     </div>
     <div style="width: 50px;"></div>
     <canvas id="canvas_game"></canvas>
     <div style="width: 50px;"></div>
     <div class="tools">
+        <div class="center_block">
+            <div id="map_name" class="title_text_small">Битва</div>
+        </div>
+        <div class="space"></div>
         <div class="title_text_small">Время</div>
-        <br>
+        <div class="space"></div>
         <div class="text" id="time_block"></div>
-        <br>
-        <br>
+        <div class="space"></div>
+        <div class="space"></div>
         <div id="base_title" class="title_text_small">Захват базы</div>
-        <br>
+        <div class="space"></div>
         <div class="text" id="base_block"></div>
         <div class="text" id="teams_block"></div>
-        <br>
-        <br>
-        <div id="you_title" class="title_text_small">Вы</div>
-        <br>
+        <div class="space"></div>
+        <div class="space"></div>
+        <div id="you_title" class="title_text_small">Состояние танка</div>
+        <div class="space"></div>
         <div class="text" id="user_block"></div>
     </div>
 </div>

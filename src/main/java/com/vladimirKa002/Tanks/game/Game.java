@@ -169,7 +169,6 @@ public class Game implements Runnable{
                 "\"time\": \"" + timer.getTime() + "\", " +
                 "\"state\": \"" + state + "\", " +
                 "\"winner\": \"" + winner + "\", " +
-                "\"map\": " + map.toString() + ", " +
                 "\"base\": " + base.toString() + ", " +
                 "\"projectiles\": [" + projectiles.stream().map(Object::toString)
                 .collect(Collectors.joining(", ")) + "] " + ", " +

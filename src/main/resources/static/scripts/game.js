@@ -4,6 +4,8 @@ const urlParams = new URLSearchParams(window.location.search);
 var room_id = urlParams.get("room_id");
 var session_id = urlParams.get("session_id");
 
+var space = '<div class=\"space\"></div>';
+
 var canvas;
 var ctx;
 
@@ -49,7 +51,8 @@ window.onload = function (){
     start();
 
     canvas.addEventListener('mousemove', e => {
-        mouseCanvasPosition = [e.offsetX / canvas.offsetWidth * units, e.offsetY / canvas.offsetHeight * units];
+        if (typeof units !== 'undefined')
+            mouseCanvasPosition = [e.offsetX / canvas.offsetWidth * units, e.offsetY / canvas.offsetHeight * units];
     });
     canvas.addEventListener('mouseleave', e => {
         mouseCanvasPosition = null;
@@ -73,8 +76,6 @@ function updateGame(game_state){
     updated = false;
 
     game_state = JSON.parse(game_state)
-
-    units = game_state.map.units
 
     ctx.drawImage(canvasField, 0, 0, units, units);
 
@@ -319,7 +320,7 @@ function start(){
                     graphics[key] = image
                     num -= 1;
                     if (num === 0) {
-                        setCanvasField(content.gameMap, content.gameState)
+                        setCanvasField(content.gameMap)
                         updateGame(content.gameState)
                         startUpdate();
                     }
@@ -331,13 +332,13 @@ function start(){
 }
 
 // Initializing canvas
-function setCanvasField(map_content, game_state){
-console.log(game_state.map)
-    game_state = JSON.parse(game_state)
-    map_content = JSON.parse(map_content).obstacles
-    obstacles = map_content
+function setCanvasField(map_content){
+    console.log(map_content)
+    map = JSON.parse(map_content)
+    obstacles = map.obstacles
+    document.getElementById('map_name').innerHTML = map.literalName;
 
-    units = game_state.map.units
+    units = map.units
 
     canvas = document.getElementById("canvas_game");
     canvas.width = units;
@@ -355,8 +356,8 @@ console.log(game_state.map)
     canvasObstacles.width = units;
     canvasObstacles.height = units;
 
-    for (var i = 0; i < map_content.length; i++){
-        var obj = map_content[i];
+    for (var i = 0; i < obstacles.length; i++){
+        var obj = obstacles[i];
 
         x = obj.position[0]
         y = obj.position[1]
@@ -460,11 +461,7 @@ function setBase(base){
     }
     else base_info = base_info.replace('!!!', td)
 
-    document.getElementById('base_block').innerHTML = base_info
-    /* if (base.team != 'null') document.getElementById('base_title').innerHTML =
-        "<div style=\"line-height: 25px;vertical-align: middle\">Захват базы " + base.team + "</div>";
-    else */
-    document.getElementById('base_title').innerHTML = "<div style=\"line-height: 25px;vertical-align: middle\">Захват базы</div>";
+    document.getElementById('base_block').innerHTML = base_info;
 }
 
 // Tank head rotation
@@ -518,8 +515,8 @@ function setMovement(){
 function setAliveTanksUI(allies_alive, allies_total, enemies_alive, enemies_total){
     // If not duel, set teams
     if (allies_total + enemies_total > 2) {
-        td = '<br><br><div class="title_text_small">Игроки</div><br><td style=\"vertical-align: bottom;\">'
-        teams_info = '<table cellspacing=\"0\"><tr>' + td + /*tankUser.team +*/ '</td>' + td + '!!!'
+        td = space + space + '<div class="title_text_small">Игроки</div>' + space + '<td style=\"vertical-align: bottom;\">'
+        teams_info = '<table cellspacing=\"0\"><tr>' + td + '</td>' + td + '!!!'
         for (var i = 0; i < allies_alive; i++) {
             teams_info+="<span class=\"circle green\"></span>"
         }
@@ -535,7 +532,7 @@ function setAliveTanksUI(allies_alive, allies_total, enemies_alive, enemies_tota
             teams_info += "<span class=\"circle red\"></span>"
         }
 
-        teams_info += "</td></tr><tr>" + td + /*teamOpponent +*/ "</td>" + td
+        teams_info += "</td></tr><tr>" + td + "</td>" + td
         for (var i = 0; i < enemies_alive; i++) {
             teams_info+="<span class=\"circle red\"></span>"
         }
@@ -554,7 +551,6 @@ function setAliveTanksUI(allies_alive, allies_total, enemies_alive, enemies_tota
     user_info += "</td></tr></table>"
 
     document.getElementById('user_block').innerHTML = user_info
-    document.getElementById('you_title').innerHTML = "Вы"; // + tankUser.team;
 }
 
 // Setting time left

@@ -47,7 +47,7 @@ public class PageController {
         Game game = Game.games.get(room_id.get());
         if (game == null) return ResponseEntity.ok(new ResponseMessage("GameNotFound", "The game was not found!"));
         return ResponseEntity.ok(new ResponseGameInit(
-                getImages(game), getAudios(game), game.getState(), game.getMap().getMapString()));
+                getImages(game), getAudios(game), game.getState(), game.getMap().toString()));
     }
 
     private final HashMap<String, String> resourcesStorage = new HashMap<>(50);
@@ -57,9 +57,9 @@ public class PageController {
 
         addResource(images, "game\\graphics\\maps\\" + game.getMap().getName() + "-map.png", "map");
 
-        addResource(images, "game\\graphics\\game-end\\victory.png", "victory");
-        addResource(images, "game\\graphics\\game-end\\defeat.png", "defeat");
-        addResource(images, "game\\graphics\\game-end\\draw.png", "draw");
+        addResource(images, "game\\graphics\\game-end\\victory-rus.png", "victory");
+        addResource(images, "game\\graphics\\game-end\\defeat-rus.png", "defeat");
+        addResource(images, "game\\graphics\\game-end\\draw-rus.png", "draw");
 
         // addResource(images, "game\\graphics\\tank-expl.gif", "tank-expl");
         addResource(images, "game\\graphics\\gun_shot.png", "hit");

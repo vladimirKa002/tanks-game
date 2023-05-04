@@ -10,9 +10,10 @@ import java.util.HashSet;
 public class Base extends StaticCircleObject {
     private final Game game;
     private final BaseConfig baseConfig;
+    private static final double COLLISION_RADIUS_PADDING = 15;
 
     public Base(double[] position, BaseConfig baseConfig, Game game) {
-        super(position, 0, baseConfig.collisionRadius, baseConfig.radius, null);
+        super(position, 0, baseConfig.radius - COLLISION_RADIUS_PADDING, baseConfig.radius, null);
         this.baseConfig = baseConfig;
         this.game = game;
     }
@@ -129,22 +130,15 @@ public class Base extends StaticCircleObject {
         LARGE(75, 30);
 
         private final double radius;
-        private final double collisionRadius;
         private final int score;
-        private static final double COLLISION_RADIUS_MULTIPLIER = 0.7;
 
         BaseConfig(double radius, int score) {
             this.radius = radius;
-            this.collisionRadius = radius * COLLISION_RADIUS_MULTIPLIER;
             this.score = score;
         }
 
         public double getRadius() {
             return radius;
-        }
-
-        public double getCollisionRadius() {
-            return collisionRadius;
         }
 
         public int getScore() { return score; }

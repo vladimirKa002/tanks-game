@@ -7,11 +7,12 @@ import java.util.*;
 
 public class Map {
     private static final Random rnd = new Random();
-    public static final int DEFAULT_UNITS = 500;
 
     private final int units;
     private final int[] playersAmount;
     private final String name;
+    private final String literalName;
+    private final String camo;
     private final MapSize size;
     private final HashSet<String> graphics;
     private final ArrayList<CollisionObject> obstacles;
@@ -21,12 +22,13 @@ public class Map {
 
     // Prebaked data
     private final String mapString;
-    private final String obstaclesString;
 
     public final List<List<TankPosition>> tanksPositions_teams;
 
     public Map(
             String name,
+            String literalName,
+            String camo,
             MapSize size,
             HashSet<String> graphics,
             ArrayList<CollisionObject> obstacles,
@@ -37,6 +39,8 @@ public class Map {
         this.units = size.units;
         this.playersAmount = new int[]{size.players, size.players};
         this.name = name;
+        this.literalName = literalName;
+        this.camo = camo;
         this.size = size;
         this.graphics = graphics;
         this.area = area;
@@ -48,8 +52,9 @@ public class Map {
         mapString = "{" +
                 "\"units\": " + units +
                 ", \"name\": \"" + name + '\"' +
+                ", \"literalName\": \"" + literalName + '\"' +
+                ", \"obstacles\": " + obstacles +
                 '}';
-        obstaclesString = "{ \"obstacles\": " + obstacles + "}";
     }
 
     public List<TankPosition> getTanksPositions_teamOne() {
@@ -72,6 +77,12 @@ public class Map {
 
     public String getName(){
         return name;
+    }
+
+    public String getLiteralName() { return literalName; }
+
+    public String getCamo(){
+        return camo;
     }
 
     public MapSize getSize(){
@@ -101,10 +112,6 @@ public class Map {
     @Override
     public String toString() {
         return mapString;
-    }
-
-    public String getMapString(){
-        return obstaclesString;
     }
 
     public double[] getBasePosition() {

@@ -1,0 +1,21 @@
+.input_elem{
+    font-family: Open Sans,sans-serif;
+    font-size: 20px;
+    text-align: center;
+
+    background: transparent;
+    padding: 0;
+    width: 80%;
+    vertical-align: bottom;
+    text-align: center;
+    margin-bottom: 10px;
+    padding: 5px 11px 5px 11px;
+    border-width: 1px;
+}
+.input_elem.width{
+    margin-top: 5px;
+    width: 150px;
+}
+.input_elem.width.left{
+    margin-left: 10px;
+}

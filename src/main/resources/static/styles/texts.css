@@ -1,0 +1,19 @@
+.title_text{
+    font-family: Open Sans,sans-serif;
+    font-size: 29px;
+    color: white;
+    margin-bottom: 5px;
+}
+.title_text_small{
+    font-family: Open Sans,sans-serif;
+    font-size: 22px;
+    color: white;
+}
+.text{
+    font-family: Open Sans,sans-serif;
+    font-size: 20px;
+    color: white;
+}
+.text.red{
+    color: red;
+}

@@ -53,5 +53,10 @@
     "shapeCollision": [48.5, 89], "shape":  [48.5, 89]}
 ],
   "base": [205, 250],
-  "back-sound": "urban"
+  "back-sound": "urban",
+  "camo": "grey",
+  "name": {
+    "eng": "City",
+    "rus": "Город"
+  }
 }

@@ -43,20 +43,7 @@ public class Tank extends RectangleObject{
     public Tank(double[] position, double rotation, String team, Game game){
         super(position, rotation, bodyShape);
 
-        switch (game.getMap().getName()) {
-            case "forest":
-                graphic = "green";
-                break;
-            case "desert":
-                graphic = "sand";
-                break;
-            case "city":
-                graphic = "grey";
-                break;
-            default:
-                graphic = "green";
-                break;
-        }
+        graphic = game.getMap().getCamo();
 
         this.team = team;
         this.game = game;

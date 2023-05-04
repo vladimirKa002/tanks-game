@@ -52,6 +52,8 @@ public class GameResources {
             ArrayList<CollisionObject> obstacles = new ArrayList<>(50);
             List<List<TankPosition>> tanksPositions_teams = new ArrayList<>(2);
             Area area = new Area();
+            String literalName = null;
+            String camo = null;
             String backSoundName = null;
             double[] basePosition;
             Map.MapSize size = Map.MapSize.SMALL;
@@ -118,6 +120,9 @@ public class GameResources {
                 JSONArray jsonArray = data.getJSONArray("base");
                 basePosition = new double[]{jsonArray.getDouble(0), jsonArray.getDouble(1)};
 
+                literalName = data.getJSONObject("name").getString("rus");
+                camo = data.getString("camo");
+
                 backSoundName = data.getString("back-sound");
             }
             catch (JSONException e) {
@@ -131,6 +136,8 @@ public class GameResources {
 
             Map map = new Map(
                     mapName,
+                    literalName,
+                    camo,
                     size,
                     graphics,
                     obstacles,

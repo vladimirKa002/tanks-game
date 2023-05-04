@@ -63,5 +63,10 @@
 {"type": "circle", "graphics": "props/green-tree", "position": [20, 388], "radius": 19.5, "radiusCollision": 16.25},
 {"type": "circle", "graphics": "props/green-tree", "position": [23, 202], "radius": 19.5, "radiusCollision": 16.25}],
   "base": [252, 250],
-  "back-sound": "forest"
+  "back-sound": "forest",
+  "camo": "green",
+  "name": {
+    "eng": "Forest",
+    "rus": "Лес"
+  }
 }

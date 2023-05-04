@@ -1,5 +1,5 @@
 # Tanks
-<img src="https://github.com/vladimirKa002/tanks-game/blob/main/src/main/resources/static/graphics/logo.png" width="200" title="logo">
+<img src="https://github.com/vladimirKa002/tanks-game/blob/main/src/main/resources/static/graphics/logo-rus.png" width="200" title="logo">
 
 Analogue of a gameplay of a world-famous World of Tanks game implemented in 2D.
 The game was written purely by using Java Spring framework and Javascript. 

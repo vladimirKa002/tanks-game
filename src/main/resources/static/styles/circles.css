@@ -1,0 +1,23 @@
+.circle {
+    height: 15px;
+    width: 15px;
+    background-color: #bbb;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 3px;
+}
+.circle.right {
+    margin-left: 10px;
+}
+.circle.red {
+    background-color: red;
+}
+.circle.green {
+    background-color: green;
+}
+.circle.blue {
+    background-color: DodgerBlue;
+}
+.circle.grey {
+    background-color: grey;
+}

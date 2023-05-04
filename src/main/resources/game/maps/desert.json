@@ -60,5 +60,10 @@
 
   ],
   "base": [400, 250],
-  "back-sound": "wind"
+  "back-sound": "wind",
+  "camo": "sand",
+  "name": {
+    "eng": "Desert",
+    "rus": "Пустыня"
+  }
 }
