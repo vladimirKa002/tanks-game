@@ -47,7 +47,7 @@ public class Base extends StaticCircleObject {
         double score = 0;
         double addScore = SCORE_PER_TICK;
         // So, total amount of scores added if many tanks on the base is SCORE_PER_TICK * MANY_TANKS
-        //   TODO : check
+        //   TODO : redo this for team fight
         if (tanksContribution.keySet().size() >= 2)
             addScore = SCORE_PER_TICK * MANY_TANKS / tanksContribution.keySet().size();
         for (Tank tank: tanksContribution.keySet()) {

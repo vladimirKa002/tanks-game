@@ -21,7 +21,6 @@ var isAirAlert = false;
 var canvasField;
 var canvasObstacles;
 
-
 ///////////////////////////////////////////////////////////////////////////////////
 // Functions for socket connection
 ///////////////////////////////////////////////////////////////////////////////////
@@ -35,7 +34,6 @@ window.onload = function (){
     // Setting event handlers
     canvas.addEventListener('mousedown', (event) => {
        keysPressed["mouse"] = true;
-       // console.log(event.offsetX + ", " +event.offsetY)
        event.preventDefault();
     });
     document.addEventListener('keydown', (event) => {
@@ -262,7 +260,6 @@ function updateGame(game_state){
         }
     */
 
-
     if (game_state.state === 'finished') {
         stopAudio('back-sound')
         stopAudio('air-alert')
@@ -275,12 +272,13 @@ function updateGame(game_state){
         else {
             img = graphics["draw"]
         }
-        drawImageAtAngle(0, canvas.width / 2, canvas.height / 2, img.width, img.height,
-            img, ctx)
+        drawImageAtAngle(0, canvas.width / 2, canvas.height / 2, img.width, img.height, img, ctx)
         disable_actions = true
     }
 
     setAliveTanksUI(allies_alive, allies_total, enemies_alive, enemies_total);
+
+    setUserInfo();
 
     setTimeLeftUI(game_state.time)
 
@@ -333,7 +331,6 @@ function start(){
 
 // Initializing canvas
 function setCanvasField(map_content){
-    console.log(map_content)
     map = JSON.parse(map_content)
     obstacles = map.obstacles
     document.getElementById('map_name').innerHTML = map.literalName;
@@ -542,11 +539,35 @@ function setAliveTanksUI(allies_alive, allies_total, enemies_alive, enemies_tota
         teams_info += "</td></tr></table>"
         document.getElementById('teams_block').innerHTML = teams_info;
     }
+}
 
+// Setting UI for user's tank
+function setUserInfo(){
     user_info = "<table cellspacing=\"0\"><tr><td style=\"color: red;text-align: center;" +
                     "vertical-align: bottom\">&#10084;</td>" + td +
                     tankUser.health + "%</td><tr>" + td + "&#128165;</td>" + td;
-    if (tankUser.reloading < 100) user_info += /*"Перезарядка " + */ tankUser.reloading + "%";
+    if (tankUser.reloading < 100) {
+        user_info += /*"Перезарядка " + */ tankUser.reloading + "%";
+
+        // Drawing the reloading progress
+        if (mouseCanvasPosition != null && !disable_actions) {
+            x = mouseCanvasPosition[0];
+            y = mouseCanvasPosition[1];
+            r = 6
+
+            ctx.lineWidth = 1.5;
+
+            ctx.strokeStyle = 'white';
+            ctx.beginPath();
+            ctx.arc(x, y, r, 0, 2 * Math.PI);
+            ctx.stroke();
+
+            ctx.strokeStyle = 'green';
+            ctx.beginPath();
+            ctx.arc(x, y, r, - Math.PI / 2, 2 * Math.PI * tankUser.reloading / 100 - Math.PI / 2);
+            ctx.stroke();
+        }
+    }
     else user_info += "Заряжен &#9989;";
     user_info += "</td></tr></table>"
 
