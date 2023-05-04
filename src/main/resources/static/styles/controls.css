@@ -4,18 +4,18 @@ body{
 }
 .title_text{
     font-family: Open Sans,sans-serif;
-    font-size: 25px;
+    font-size: 29px;
     color: white;
     margin-bottom: 5px;
 }
 .title_text_small{
     font-family: Open Sans,sans-serif;
-    font-size: 18px;
+    font-size: 22px;
     color: white;
 }
 .text{
     font-family: Open Sans,sans-serif;
-    font-size: 16px;
+    font-size: 20px;
     color: white;
 }
 .text.red{
@@ -23,7 +23,7 @@ body{
 }
 .input_elem{
     font-family: Open Sans,sans-serif;
-    font-size: 16px;
+    font-size: 20px;
     text-align: center;
 
     background: transparent;
@@ -46,7 +46,7 @@ body{
 .input_button{
     cursor: pointer;
     font-family: Open Sans,sans-serif;
-    font-size: 14px;
+    font-size: 18px;
 
     background-color: #111f13;
     font-weight: 300;
@@ -75,8 +75,9 @@ body{
 }
 #canvas_game{
     border:black 1px solid;
-    width: 500px;
-    height: 500px;
+    position: relative;
+    height: auto;
+    min-height: 100% !important;
  }
 .block{
     position: absolute;
@@ -90,7 +91,7 @@ body{
     right: 0;
     bottom: 0;
     left: 0;
-    margin: auto;
+    margin: 5px;
 }
 .tools{
     -webkit-box-sizing: border-box;
@@ -98,19 +99,17 @@ body{
     box-sizing: border-box;
 
     display: flex;
-    width:200px;
-    height: 500px;
+
+    width: 100%;
+    height: auto;
+    min-height: 100% !important;
+
     padding: 15px;
     flex-flow: column wrap;
     background-color: black;
 }
 .tools.left{
-    display: flex;
-    width:200px;
-    height: 500px;
     padding: 5px;
-    flex-flow: column wrap;
-    background-color: black;
     align-items: center;
     justify-content: top;
 }

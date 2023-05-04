@@ -124,7 +124,7 @@ public class Base extends StaticCircleObject {
     }
 
     public enum BaseConfig{
-        SMALL(50, 10),
+        SMALL(50, 10), // Score = time
         MEDIUM(60, 20),
         LARGE(75, 30);
 

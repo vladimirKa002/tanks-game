@@ -43,16 +43,13 @@ window.onload = function (){
        delete this.keysPressed[event.keyCode];
     });
 
-    canvas.width = 500;
-    canvas.height = 500;
-
     // Connecting to the socket
     connect(room_id);
     // Starting the game
     start();
 
     canvas.addEventListener('mousemove', e => {
-        mouseCanvasPosition = [e.offsetX, e.offsetY];
+        mouseCanvasPosition = [e.offsetX / canvas.offsetWidth * units, e.offsetY / canvas.offsetHeight * units];
     });
     canvas.addEventListener('mouseleave', e => {
         mouseCanvasPosition = null;
@@ -335,22 +332,28 @@ function start(){
 
 // Initializing canvas
 function setCanvasField(map_content, game_state){
+console.log(game_state.map)
     game_state = JSON.parse(game_state)
     map_content = JSON.parse(map_content).obstacles
     obstacles = map_content
 
+    units = game_state.map.units
+
+    canvas = document.getElementById("canvas_game");
+    canvas.width = units;
+    canvas.height = units;
+
     canvasField = document.createElement('canvas');
     ctxField = canvasField.getContext('2d');
-    canvasField.width = 500;
-    canvasField.height = 500;
+    canvasField.width = units;
+    canvasField.height = units;
 
-    units = game_state.map.units
     ctxField.drawImage(graphics["map"], 0, 0, units, units);
 
     canvasObstacles = document.createElement('canvas');
     ctxObstacles = canvasObstacles.getContext('2d');
-    canvasObstacles.width = 500;
-    canvasObstacles.height = 500;
+    canvasObstacles.width = units;
+    canvasObstacles.height = units;
 
     for (var i = 0; i < map_content.length; i++){
         var obj = map_content[i];
@@ -458,10 +461,10 @@ function setBase(base){
     else base_info = base_info.replace('!!!', td)
 
     document.getElementById('base_block').innerHTML = base_info
-    if (base.team != 'null') document.getElementById('base_title').innerHTML =
-        "<div style=\"line-height: 25px;vertical-align: middle\">Base " + base.team + "</div>";
-    else document.getElementById('base_title').innerHTML =
-        "<div style=\"line-height: 25px;vertical-align: middle\">Base</div>";
+    /* if (base.team != 'null') document.getElementById('base_title').innerHTML =
+        "<div style=\"line-height: 25px;vertical-align: middle\">Захват базы " + base.team + "</div>";
+    else */
+    document.getElementById('base_title').innerHTML = "<div style=\"line-height: 25px;vertical-align: middle\">Захват базы</div>";
 }
 
 // Tank head rotation
@@ -513,42 +516,45 @@ function setMovement(){
 
 // Setting UI for alive tanks while game updating
 function setAliveTanksUI(allies_alive, allies_total, enemies_alive, enemies_total){
-    td = '<td style=\"vertical-align: bottom;\">'
-    teams_info = '<table cellspacing=\"0\"><tr>' + td + tankUser.team +'</td>' + td + '!!!'
-    for (var i = 0; i < allies_alive; i++) {
-        teams_info+="<span class=\"circle green\"></span>"
-    }
-    for (var i = 0; i < allies_total - allies_alive; i++) {
-        teams_info+="<span class=\"circle grey\"></span>"
-    }
+    // If not duel, set teams
+    if (allies_total + enemies_total > 2) {
+        td = '<br><br><div class="title_text_small">Игроки</div><br><td style=\"vertical-align: bottom;\">'
+        teams_info = '<table cellspacing=\"0\"><tr>' + td + /*tankUser.team +*/ '</td>' + td + '!!!'
+        for (var i = 0; i < allies_alive; i++) {
+            teams_info+="<span class=\"circle green\"></span>"
+        }
+        for (var i = 0; i < allies_total - allies_alive; i++) {
+            teams_info+="<span class=\"circle grey\"></span>"
+        }
 
-    if (tankUser.health > 0) {
-        teams_info = teams_info.replace('!!!', "<span class=\"circle blue\"></span>")
-    }
-    else {
-        teams_info = teams_info.replace("!!!", "")
-        teams_info += "<span class=\"circle red\"></span>"
-    }
+        if (tankUser.health > 0) {
+            teams_info = teams_info.replace('!!!', "<span class=\"circle blue\"></span>")
+        }
+        else {
+            teams_info = teams_info.replace("!!!", "")
+            teams_info += "<span class=\"circle red\"></span>"
+        }
 
-    teams_info += "</td></tr><tr>" + td + teamOpponent + "</td>" + td
-    for (var i = 0; i < enemies_alive; i++) {
-        teams_info+="<span class=\"circle red\"></span>"
+        teams_info += "</td></tr><tr>" + td + /*teamOpponent +*/ "</td>" + td
+        for (var i = 0; i < enemies_alive; i++) {
+            teams_info+="<span class=\"circle red\"></span>"
+        }
+        for (var i = 0; i < enemies_total - enemies_alive; i++) {
+            teams_info+="<span class=\"circle grey\"></span>"
+        }
+        teams_info += "</td></tr></table>"
+        document.getElementById('teams_block').innerHTML = teams_info;
     }
-    for (var i = 0; i < enemies_total - enemies_alive; i++) {
-        teams_info+="<span class=\"circle grey\"></span>"
-    }
-    teams_info += "</td></tr></table>"
-    document.getElementById('teams_block').innerHTML = teams_info;
 
     user_info = "<table cellspacing=\"0\"><tr><td style=\"color: red;text-align: center;" +
                     "vertical-align: bottom\">&#10084;</td>" + td +
                     tankUser.health + "%</td><tr>" + td + "&#128165;</td>" + td;
-    if (tankUser.reloading < 100) user_info += tankUser.reloading + "%";
-    else user_info += "Ready &#9989;";
+    if (tankUser.reloading < 100) user_info += /*"Перезарядка " + */ tankUser.reloading + "%";
+    else user_info += "Заряжен &#9989;";
     user_info += "</td></tr></table>"
 
     document.getElementById('user_block').innerHTML = user_info
-    document.getElementById('you_title').innerHTML = "You " + tankUser.team;
+    document.getElementById('you_title').innerHTML = "Вы"; // + tankUser.team;
 }
 
 // Setting time left

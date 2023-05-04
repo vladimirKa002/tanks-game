@@ -16,10 +16,10 @@
     <img style="width:250px;height:102px;margin-top:10px;" src="/graphics/logo.png" alt="Logo">
     <br>
     <br>
-    <div id="ready_players" class="title_text_small">Waiting for players...</div>
+    <div id="ready_players" class="title_text_small">Ожидание игроков...</div>
     <br>
     <form action="/main">
-        <input class="input_button" type="submit" value="Menu"/>
+        <input class="input_button" type="submit" value="Меню"/>
     </form>
 </div>
 </body>

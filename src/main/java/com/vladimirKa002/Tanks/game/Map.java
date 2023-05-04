@@ -128,5 +128,15 @@ public class Map {
         }
 
         public int getPlayers() { return players; }
+
+        public static MapSize getMapSize(String value){
+            value = value.toUpperCase();
+            try {
+                return valueOf(value);
+            }
+            catch (IllegalArgumentException e){
+                return SMALL;
+            }
+        }
     }
 }

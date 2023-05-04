@@ -15,9 +15,7 @@
     <br>
     <br>
     <form action="/waiting/page">
-        <input class="input_button" name="game_mode"  type="submit" value="Small"/>
-        <input class="input_button right" name="game_mode" type="submit" value="Medium"/>
-        <input class="input_button right" name="game_mode" type="submit" value="Large"/>
+        <input class="input_button" name="game_mode"  type="submit" value="В бой!"/>
     </form>
 </div>
 </body>
