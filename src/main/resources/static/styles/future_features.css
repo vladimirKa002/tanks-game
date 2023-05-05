@@ -1,0 +1,21 @@
+.future_features{
+    display: inline-block;
+    position: relative;
+
+    transform: rotate(-10deg);
+
+    left: 150px;
+    top: 100px
+}
+.future_features_title{
+    font-family: Open Sans,sans-serif;
+    font-size: 29px;
+    color: #02ff00;
+    margin-bottom: 5px;
+}
+.future_features_content{
+    position: absolute;
+    left: 55px;
+    top: 30px;
+    text-align: center;
+}
