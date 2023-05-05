@@ -42,13 +42,13 @@ function disconnect(){
 
 // Setting UI - numbered
 function setReady(ready, num){
-    ready_info = 'Waiting for players: ' + ready + '/' + num
+    ready_info = 'Ожидание игроков: ' + ready + '/' + num
     document.getElementById('ready_players').innerHTML = ready_info;
 }
 
 // Setting UI - points
 function setReadyPoints(ready, num){
-    ready_info = 'Waiting for players...'
+    ready_info = 'Ожидание игроков...'
     var total = 0;
     for (var i = 0; i < ready; i++) {
         if (total === 0) ready_info+="<span class=\"circle right green\"></span>"

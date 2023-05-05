@@ -1,6 +1,16 @@
 body{
     width: 100%;
-    background-color: DimGrey;
+    height: 100vh;
+
+    overflow-y: hidden;
+    overflow-x: hidden;
+
+    background-repeat:   no-repeat;
+    background-position: 50% 50%;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
 }
 .space{
     margin: 10px 0 10px 0;
@@ -19,6 +29,7 @@ body{
     position: relative;
     height: auto;
     min-height: 100% !important;
+    max-height: 100%;
  }
 .block{
     position: absolute;

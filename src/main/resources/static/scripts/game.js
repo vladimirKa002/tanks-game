@@ -512,7 +512,7 @@ function setMovement(){
 function setAliveTanksUI(allies_alive, allies_total, enemies_alive, enemies_total){
     // If not duel, set teams
     if (allies_total + enemies_total > 2) {
-        td = space + space + '<div class="title_text_small">Игроки</div>' + space + '<td style=\"vertical-align: bottom;\">'
+        td = '<td style=\"vertical-align: bottom;\">'
         teams_info = '<table cellspacing=\"0\"><tr>' + td + '</td>' + td + '!!!'
         for (var i = 0; i < allies_alive; i++) {
             teams_info+="<span class=\"circle green\"></span>"
@@ -537,7 +537,8 @@ function setAliveTanksUI(allies_alive, allies_total, enemies_alive, enemies_tota
             teams_info+="<span class=\"circle grey\"></span>"
         }
         teams_info += "</td></tr></table>"
-        document.getElementById('teams_block').innerHTML = teams_info;
+        document.getElementById('teams_block').innerHTML =  space + space +
+            '<div class="title_text_small">Игроки</div>' + space + teams_info;
     }
 }
 

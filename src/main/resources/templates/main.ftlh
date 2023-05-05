@@ -11,6 +11,7 @@
     <script src="/webjars/jquery/jquery.min.js"></script>
     <script src="/webjars/sockjs-client/sockjs.min.js"></script>
     <script src="/webjars/stomp-websocket/stomp.min.js"></script>
+    <script type="text/javascript" src="./scripts/background-setter.js"></script>
 </head>
 <body>
 <div class="future_features">

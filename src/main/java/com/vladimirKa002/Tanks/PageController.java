@@ -155,7 +155,7 @@ public class PageController {
     @GetMapping({"/waiting/page"})
     public String getPageWaiting(Model model,
                                  @RequestParam("game_mode") Optional<String> game_mode_param){
-        model.addAttribute("game_mode", game_mode_param.orElse("Duel"));
+        model.addAttribute("game_mode", Map.MapSize.getMapSize(game_mode_param.get()).name());
         return "waiting";
     }
 
