@@ -16,9 +16,7 @@ public abstract class RectangleObject extends CollisionObject{
     }
 
     @Override
-    public Area getShape() {
-        if (this instanceof Static && area != null) return area;
-
+    protected Area updatedShape() {
         double x = position[0] - collisionShape[0] / 2;
         double y = position[1] - collisionShape[1] / 2;
         double w = collisionShape[0];
@@ -29,6 +27,6 @@ public abstract class RectangleObject extends CollisionObject{
         AffineTransform af = new AffineTransform();
         af.rotate(Math.toRadians(rotation), position[0], position[1]);
 
-        return area = new Area(rect).createTransformedArea(af);
+        return new Area(rect).createTransformedArea(af);
     }
 }

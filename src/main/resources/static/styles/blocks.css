@@ -5,6 +5,7 @@ body{
     overflow-y: hidden;
     overflow-x: hidden;
 
+    background-color: DimGrey;
     background-repeat:   no-repeat;
     background-position: 50% 50%;
     -webkit-background-size: cover;

@@ -46,25 +46,16 @@ public class Projectile extends RectangleObject {
      * Checking intersection with object's area
      *
      * @param area  Object's area
-     * @return      Returns true if intersects
      */
     private void checkIntersection(Area area, CollisionObject obj){
-        // Creating a vector in a form of rectangle in a direction of a projectile
-        Rectangle2D.Double vector = new Rectangle2D.Double(initPos[0] - shape[0], initPos[1],
-                shape[0] * 2, Math.sqrt((position[0] - initPos[0]) * (position[0] - initPos[0]) +
-                (position[1] - initPos[1]) * (position[1] - initPos[1])));
+        Area _area = (Area) this.area.clone();
+        _area.intersect(area);
 
-        AffineTransform af = new AffineTransform();
-        af.rotate(Math.toRadians((rotation + 180) % 360), initPos[0], initPos[1]);
-
-        Area vectorArea = new Area(vector).createTransformedArea(af);
-        vectorArea.intersect(area);
-
-        if (!vectorArea.isEmpty()) {
+        if (!_area.isEmpty()) {
             // We get a bounding rectangle of the intersection
             // and get its corner that is the closest to initial point.
             // It should be precise enough to get hit position
-            Rectangle2D.Double rect = (Rectangle2D.Double) vectorArea.getBounds2D();
+            Rectangle2D.Double rect = (Rectangle2D.Double) _area.getBounds2D();
             double[][] points = new double[4][2];
             points[0][0] = rect.x; points[0][1] = rect.y;
             points[1][0] = rect.x + rect.width; points[1][1] = rect.y;
@@ -125,6 +116,8 @@ public class Projectile extends RectangleObject {
         position[0] += x_dir * SPEED;
         position[1] += y_dir * SPEED;
 
+        area = updatedShape();
+
         checkIntersection(game.getMap().getArea(), null);
         for (Tank tank: game.getTanks()) {
             if (tank.id != owner.id) {
@@ -154,6 +147,19 @@ public class Projectile extends RectangleObject {
         if (checkPosition(game.getMap().getUnits())) {
             isActive = false;
         }
+    }
+
+    @Override
+    protected Area updatedShape(){
+        // Creating a vector in a form of rectangle in a direction of a projectile
+        Rectangle2D.Double vector = new Rectangle2D.Double(initPos[0] - shape[0], initPos[1],
+                shape[0] * 2, Math.sqrt((position[0] - initPos[0]) * (position[0] - initPos[0]) +
+                (position[1] - initPos[1]) * (position[1] - initPos[1])));
+
+        AffineTransform af = new AffineTransform();
+        af.rotate(Math.toRadians((rotation + 180) % 360), initPos[0], initPos[1]);
+
+        return new Area(vector).createTransformedArea(af);
     }
 
     @Override

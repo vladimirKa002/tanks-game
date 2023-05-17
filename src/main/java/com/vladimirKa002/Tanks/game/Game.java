@@ -260,21 +260,15 @@ public class Game implements Runnable{
             switch (action) {
                 case "forward":
                     tank.move(1);
-                    tank.checkCollisions(Arrays.asList(tanks), map.getArea(), "mov");
-                    tank.checkPosition(map.getUnits());
                     break;
                 case "backward":
                     tank.move(-1);
-                    tank.checkCollisions(Arrays.asList(tanks), map.getArea(), "mov");
-                    tank.checkPosition(map.getUnits());
                     break;
                 case "right":
                     tank.rotateTank(1);
-                    tank.checkCollisions(Arrays.asList(tanks), map.getArea(), "rot");
                     break;
                 case "left":
                     tank.rotateTank(-1);
-                    tank.checkCollisions(Arrays.asList(tanks), map.getArea(), "rot");
                     break;
                 case "head_right":
                     tank.rotateHead(1);

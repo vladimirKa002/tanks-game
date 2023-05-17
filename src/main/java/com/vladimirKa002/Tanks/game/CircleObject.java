@@ -14,9 +14,7 @@ public abstract class CircleObject extends CollisionObject{
     }
 
     @Override
-    public Area getShape() {
-        if (this instanceof Static && area != null) return area;
-
+    public Area updatedShape() {
         double x = position[0] - collisionRadius;
         double y = position[1]  - collisionRadius;
         double w = collisionRadius * 2;
@@ -24,6 +22,6 @@ public abstract class CircleObject extends CollisionObject{
 
         Ellipse2D.Double circle = new Ellipse2D.Double(x, y, w, h);
 
-        return area = new Area(circle);
+        return new Area(circle);
     }
 }

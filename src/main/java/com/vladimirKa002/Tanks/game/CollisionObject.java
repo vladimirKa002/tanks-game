@@ -10,5 +10,10 @@ public abstract class CollisionObject extends GameObject{
 
     protected Area area;
 
-    public abstract Area getShape();
+    public Area getShape() {
+        if (area == null) area = updatedShape();
+        return area;
+    }
+
+    protected abstract Area updatedShape();
 }

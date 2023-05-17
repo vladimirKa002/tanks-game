@@ -6,7 +6,6 @@ import com.vladimirKa002.Tanks.game.Effects.VisualEffect;
 
 import java.awt.geom.Area;
 import java.util.*;
-import java.util.List;
 
 public class Tank extends RectangleObject{
     private int health = 100;
@@ -28,9 +27,6 @@ public class Tank extends RectangleObject{
     private final String graphic;
 
     private final Game game;
-
-    private double[] prevPosition;
-    private double prevRotation;
 
     private String user = null;
 
@@ -58,10 +54,10 @@ public class Tank extends RectangleObject{
     }
 
     public void move(int direction){
+        double[] prevPosition = position.clone();
+
         double x_dir = -Math.sin(-Math.toRadians(rotation));
         double y_dir = -Math.cos(-Math.toRadians(rotation));
-
-        prevPosition = position.clone();
 
         if (direction == 1){
             position[0] += x_dir * FORWARD_MOVE;
@@ -71,10 +67,19 @@ public class Tank extends RectangleObject{
             position[0] += x_dir * BACKWARD_MOVE;
             position[1] += y_dir * BACKWARD_MOVE;
         }
+
+        Area tempArea = updatedShape();
+
+        if (checkPosition() || checkCollisions(tempArea)) {
+            position = prevPosition;
+            return;
+        }
+
+        area = tempArea;
     }
 
     public void rotateTank(int direction){
-        prevRotation = rotation;
+        double prevRotation = rotation;
 
         if (direction == 1) {
             rotation += ROTATION;
@@ -83,45 +88,39 @@ public class Tank extends RectangleObject{
             rotation -= ROTATION;
         }
         rotation = (rotation + 360) % 360;
-    }
 
-    public void revertMovement(){
-        position[0] = prevPosition[0];
-        position[1] = prevPosition[1];
-    }
+        Area tempArea = updatedShape();
 
-    public void revertRotation(){
-        rotation = prevRotation;
+        if (checkCollisions(tempArea)) {
+            rotation = prevRotation;
+            return;
+        }
+
+        area = tempArea;
     }
 
     // In case if any collision happened, revert previous action
-    public void checkCollisions(List<CollisionObject> objects, Area object, String mode){
-        Area area = getShape();
-        area.intersect(object);
-        if (!area.isEmpty()) {
-            if (mode.equals("rot")) revertRotation();
-            else {
-                revertMovement();
-            }
+    private boolean checkCollisions(Area area){
+        Area _area = (Area) area.clone();
+        _area.intersect(game.getMap().getArea());
+        if (!_area.isEmpty()) {
+            return true;
         }
 
-        for (CollisionObject obj: objects){
+        for (CollisionObject obj: game.getTanks()){
             if (obj.id == this.id) continue;
-            area = getShape();
-            area.intersect(obj.getShape());
-            if (!area.isEmpty()) {
-                if (mode.equals("rot")) revertRotation();
-                else {
-                    revertMovement();
-                }
+            _area = (Area) area.clone();
+            _area.intersect(obj.getShape());
+            if (!_area.isEmpty()) {
+                return true;
             }
         }
+        return false;
     }
 
-    public void checkPosition(int units){
-        if (position[0] < 0 || position[1] < 0 || position[0] > units || position[1] > units) {
-            revertMovement();
-        }
+    private boolean checkPosition(){
+        return position[0] < 0 || position[1] < 0 ||
+                position[0] > game.getMap().getUnits() || position[1] > game.getMap().getUnits();
     }
 
     public void setDamage(int damage){

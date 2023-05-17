@@ -122,12 +122,12 @@ public class PageController {
 
         Map.MapSize mapSize = Map.MapSize.getMapSize(game_mode_param);
 
-        if (true) {
+        /*if (true) {
             Game game = new Game(mapSize);
             game.setTankUser(session_id);
             game.startGame();
             return ResponseEntity.ok(new ResponseSession(session_id, game.id, false, 0, 0));
-        }
+        }*/
 
         for (Game value : Game.games.values()) {
             int playerNum = value.getTanksAmount();
@@ -185,6 +185,8 @@ public class PageController {
      */
     @MessageMapping("/game/update")
     public void updateGame(DataPackage dataPackage) {
+        double startTime = System.currentTimeMillis();
+
         Game game = Game.games.get(dataPackage.room_id);
         if (game == null) {
             System.out.println("The game was not found!");
@@ -198,6 +200,8 @@ public class PageController {
             simpMessagingTemplate.convertAndSend("/game." + dataPackage.room_id, state);
         }
         prevState = state;
+
+        // System.out.println("Update time: " + (System.currentTimeMillis() - startTime));
     }
 
     public static class DataPackage {
