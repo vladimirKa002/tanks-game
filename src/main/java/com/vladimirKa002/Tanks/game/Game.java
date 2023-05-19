@@ -179,7 +179,7 @@ public class Game implements Runnable{
                 "}";
     }
 
-    public static int FPS = 60;
+    public static final int FPS = 60;
 
     private static final int LAST_TICKS = 100;
 
@@ -256,28 +256,30 @@ public class Game implements Runnable{
 
         if (tank == null) return;
 
+        double fpsMultiplier = dataPackage.elapsed / (1000.0 / FPS);
+
         for (String action: dataPackage.actions.split(";")) {
             switch (action) {
                 case "forward":
-                    tank.move(1);
+                    tank.move(1, fpsMultiplier);
                     break;
                 case "backward":
-                    tank.move(-1);
+                    tank.move(-1, fpsMultiplier);
                     break;
                 case "right":
-                    tank.rotateTank(1);
+                    tank.rotateTank(1, fpsMultiplier);
                     break;
                 case "left":
-                    tank.rotateTank(-1);
+                    tank.rotateTank(-1, fpsMultiplier);
                     break;
                 case "head_right":
-                    tank.rotateHead(1);
+                    tank.rotateHead(1, fpsMultiplier);
                     break;
                 case "shot":
                     tank.shot();
                     break;
                 case "head_left":
-                    tank.rotateHead(-1);
+                    tank.rotateHead(-1, fpsMultiplier);
                     break;
             }
         }

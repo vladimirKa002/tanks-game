@@ -53,19 +53,19 @@ public class Tank extends RectangleObject{
         this.user = user;
     }
 
-    public void move(int direction){
+    public void move(int direction, double multiplier){
         double[] prevPosition = position.clone();
 
         double x_dir = -Math.sin(-Math.toRadians(rotation));
         double y_dir = -Math.cos(-Math.toRadians(rotation));
 
         if (direction == 1){
-            position[0] += x_dir * FORWARD_MOVE;
-            position[1] += y_dir * FORWARD_MOVE;
+            position[0] += x_dir * FORWARD_MOVE * multiplier;
+            position[1] += y_dir * FORWARD_MOVE * multiplier;
         }
         else if (direction == -1){
-            position[0] += x_dir * BACKWARD_MOVE;
-            position[1] += y_dir * BACKWARD_MOVE;
+            position[0] += x_dir * BACKWARD_MOVE * multiplier;
+            position[1] += y_dir * BACKWARD_MOVE * multiplier;
         }
 
         Area tempArea = updatedShape();
@@ -78,14 +78,14 @@ public class Tank extends RectangleObject{
         area = tempArea;
     }
 
-    public void rotateTank(int direction){
+    public void rotateTank(int direction, double multiplier){
         double prevRotation = rotation;
 
         if (direction == 1) {
-            rotation += ROTATION;
+            rotation += ROTATION * multiplier;
         }
         else if (direction == -1) {
-            rotation -= ROTATION;
+            rotation -= ROTATION * multiplier;
         }
         rotation = (rotation + 360) % 360;
 
@@ -142,12 +142,12 @@ public class Tank extends RectangleObject{
         return rotation;
     }
 
-    public void rotateHead(int direction){
+    public void rotateHead(int direction, double multiplier){
         if (direction == 1) {
-            head_rotation += HEAD_ROTATION;
+            head_rotation += HEAD_ROTATION * multiplier;
         }
         else if (direction == -1) {
-            head_rotation -= HEAD_ROTATION;
+            head_rotation -= HEAD_ROTATION * multiplier;
         }
         head_rotation = (head_rotation + 360) % 360;
     }

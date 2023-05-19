@@ -208,11 +208,13 @@ public class PageController {
         public String room_id;
         public String session_id;
         public String actions;
+        public double elapsed;
 
-        public DataPackage(String room_id, String session_id, String actions) {
+        public DataPackage(String room_id, String session_id, String actions, double elapsed) {
             this.room_id = room_id;
             this.session_id = session_id;
             this.actions = actions;
+            this.elapsed = elapsed;
         }
     }
 

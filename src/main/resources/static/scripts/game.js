@@ -375,8 +375,14 @@ function setCanvasField(map_content){
 }
 
 // Game loop
+let previousTimeStamp, elapsed;
 function startUpdate() {
-    loop = setInterval(function() {
+    function step(timestamp) {
+        if (previousTimeStamp === undefined) {
+            previousTimeStamp = timestamp;
+        }
+        elapsed = timestamp - previousTimeStamp;
+
         if (!updated || !graphics_loaded) return
 
         actions_str = ''
@@ -398,16 +404,20 @@ function startUpdate() {
 
             if (actions_str.length > 0) actions_str = actions_str.substring(1)
         }
+        updateGameRequest(actions_str);
 
-        updateGameRequest(actions_str)
-    }, 1000/60);
+        previousTimeStamp = timestamp;
+        window.requestAnimationFrame(step);
+    }
+
+    window.requestAnimationFrame(step);
 }
 
 // If some actions were performed, update game
 var disable_actions = false;
 function updateGameRequest(actions){
      stompClient.send("/app/game/update", {},
-        JSON.stringify({'room_id':room_id, 'session_id':session_id, 'actions': actions}));
+        JSON.stringify({'room_id':room_id, 'session_id':session_id, 'actions': actions, 'elapsed': elapsed}));
 }
 
 
@@ -488,7 +498,7 @@ function setTankHead(){
     if (difference_angle > 180) difference_angle = 360 - difference_angle;
     if (difference_angle < tankUser.headRotationSpeed) return '';
 
-    return  action;
+    return action;
 }
 
 function setMovement(){
