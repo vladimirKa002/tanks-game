@@ -14,6 +14,8 @@
     <script type="text/javascript" src="./scripts/game.js"></script>
 </head>
 <body>
+<script>var room_id = '${room_id}';</script>
+<script>var session_id = '${session_id}';</script>
 <div class="block center">
     <div class="tools">
         <div class="center_block">

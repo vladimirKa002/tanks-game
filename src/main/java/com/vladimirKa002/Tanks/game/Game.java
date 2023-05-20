@@ -7,11 +7,16 @@ import com.vladimirKa002.Tanks.TanksApplication;
 import com.vladimirKa002.Tanks.game.Effects.AudioEffect;
 import com.vladimirKa002.Tanks.game.Effects.Effect;
 import com.vladimirKa002.Tanks.game.Effects.VisualEffect;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
 public class Game implements Runnable{
+
+    @Autowired private SimpMessagingTemplate simpMessagingTemplate;
+
     public final String id;
 
     public static HashMap<String, Game> games = new HashMap<>();
@@ -235,6 +240,7 @@ public class Game implements Runnable{
                             finishGame();
                         }
                     }
+                    // simpMessagingTemplate.convertAndSend("/game." + id, state);
                     Thread.sleep(1000/FPS);
                 }
                 catch (InterruptedException ignored) {
@@ -272,14 +278,14 @@ public class Game implements Runnable{
                 case "left":
                     tank.rotateTank(-1, fpsMultiplier);
                     break;
-                case "head_right":
-                    tank.rotateHead(1, fpsMultiplier);
-                    break;
                 case "shot":
                     tank.shot();
                     break;
+                case "head_right":
+                    tank.rotateHead(1);
+                    break;
                 case "head_left":
-                    tank.rotateHead(-1, fpsMultiplier);
+                    tank.rotateHead(-1);
                     break;
             }
         }

@@ -1,9 +1,5 @@
 var stompClient = null;
 
-const urlParams = new URLSearchParams(window.location.search);
-var room_id = urlParams.get("room_id");
-var session_id = urlParams.get("session_id");
-
 var space = '<div class=\"space\"></div>';
 
 var canvas;
@@ -20,6 +16,8 @@ var teamOpponent;
 var isAirAlert = false;
 var canvasField;
 var canvasObstacles;
+
+const FPS = 60;
 
 ///////////////////////////////////////////////////////////////////////////////////
 // Functions for socket connection
@@ -63,8 +61,8 @@ function connect(game_id) {
     stompClient = Stomp.over(socket);
     stompClient.debug = null
     stompClient.connect({}, function(frame) {
-        stompClient.subscribe('/game.' + game_id, function(content) {
-            updateGame(content.body);
+        stompClient.subscribe('/game.' + game_id, function(con_content) {
+            updateGame(con_content.body);
         });
     });
 }
@@ -416,7 +414,7 @@ function startUpdate() {
 // If some actions were performed, update game
 var disable_actions = false;
 function updateGameRequest(actions){
-     stompClient.send("/app/game/update", {},
+    stompClient.send("/app/game/update", {},
         JSON.stringify({'room_id':room_id, 'session_id':session_id, 'actions': actions, 'elapsed': elapsed}));
 }
 
@@ -496,7 +494,7 @@ function setTankHead(){
     }
 
     if (difference_angle > 180) difference_angle = 360 - difference_angle;
-    if (difference_angle < tankUser.headRotationSpeed * elapsed) return '';
+    if (Math.abs(difference_angle) < tankUser.headRotationSpeed) return '';
 
     return action;
 }

@@ -26,7 +26,11 @@ public class PageController {
     private SimpMessagingTemplate simpMessagingTemplate;
 
     @RequestMapping(value = {"/game"})
-    public String getPageGame(Model model){
+    public String getPageGame(Model model,
+                              @RequestParam("room_id") String room_id,
+                              @RequestParam("session_id") String session_id){
+        model.addAttribute("room_id", room_id);
+        model.addAttribute("session_id", session_id);
         return "game";
     }
 
@@ -42,9 +46,9 @@ public class PageController {
      * @return              hashmap with graphics
      */
     @GetMapping("/game/init")
-    public ResponseEntity<?> initGame(@RequestParam("room_id") Optional<String> room_id)
+    public ResponseEntity<?> initGame(@RequestParam("room_id") String room_id)
             throws Exception {
-        Game game = Game.games.get(room_id.get());
+        Game game = Game.games.get(room_id);
         if (game == null) return ResponseEntity.ok(new ResponseMessage("GameNotFound", "The game was not found!"));
         return ResponseEntity.ok(new ResponseGameInit(
                 getImages(game), getAudios(game), game.getState(), game.getMap().toString()));
