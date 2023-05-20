@@ -496,7 +496,7 @@ function setTankHead(){
     }
 
     if (difference_angle > 180) difference_angle = 360 - difference_angle;
-    if (difference_angle * elapsed < tankUser.headRotationSpeed) return '';
+    if (difference_angle < tankUser.headRotationSpeed * elapsed) return '';
 
     return action;
 }
