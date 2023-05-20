@@ -122,12 +122,12 @@ public class PageController {
 
         Map.MapSize mapSize = Map.MapSize.getMapSize(game_mode_param);
 
-        /*if (true) {
+        if (true) {
             Game game = new Game(mapSize);
             game.setTankUser(session_id);
             game.startGame();
             return ResponseEntity.ok(new ResponseSession(session_id, game.id, false, 0, 0));
-        }*/
+        }
 
         for (Game value : Game.games.values()) {
             int playerNum = value.getTanksAmount();

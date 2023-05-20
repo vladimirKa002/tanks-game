@@ -3,15 +3,16 @@
 
 Analogue of a gameplay of a world-famous World of Tanks game implemented in 2D.
 The game was written purely by using Java Spring framework and Javascript. 
-It is available on desktop-computer browsers (there were some performance 
-issues on Firefox v100.0.2, on other browsers it should work fine).
+It is available on desktop-computer browsers.
 
 ## Installation
 To use the app launch docker container. Do this by using the following commands:
 
-Build image:&nbsp;&nbsp; docker build -t tanks-game .  
-Launch:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-&nbsp;&nbsp;&nbsp; docker run -p 8080:8080 tanks-game
+Build image:  
+`docker build -t tanks-game .`
+
+Launch:  
+`docker run -p 8080:8080 tanks-game`
 
 ## Implementation
 Multiplayer connection is performed by using WebSockets. On both client side (browser)

@@ -1,6 +1,6 @@
 HELP.md
 target/*
-!target/Tanks-1.0.0.jar
+!target/Tanks.jar
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/

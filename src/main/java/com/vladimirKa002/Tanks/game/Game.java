@@ -273,13 +273,13 @@ public class Game implements Runnable{
                     tank.rotateTank(-1, fpsMultiplier);
                     break;
                 case "head_right":
-                    tank.rotateHead(1, fpsMultiplier);
+                    tank.rotateHead(1);
                     break;
                 case "shot":
                     tank.shot();
                     break;
                 case "head_left":
-                    tank.rotateHead(-1, fpsMultiplier);
+                    tank.rotateHead(-1);
                     break;
             }
         }

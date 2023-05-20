@@ -142,12 +142,12 @@ public class Tank extends RectangleObject{
         return rotation;
     }
 
-    public void rotateHead(int direction, double multiplier){
+    public void rotateHead(int direction){
         if (direction == 1) {
-            head_rotation += HEAD_ROTATION * multiplier;
+            head_rotation += HEAD_ROTATION;
         }
         else if (direction == -1) {
-            head_rotation -= HEAD_ROTATION * multiplier;
+            head_rotation -= HEAD_ROTATION;
         }
         head_rotation = (head_rotation + 360) % 360;
     }
